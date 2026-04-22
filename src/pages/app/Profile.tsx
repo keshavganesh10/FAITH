@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import { Bell, Bookmark, CalendarPlus, ChevronRight, LogOut, MapPin } from 'lucide-react';
+import { Bell, Bookmark, CalendarPlus, ChevronRight, LogOut, MapPin, Moon, Sun } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { useUser } from '@/state/user';
+import { useTheme } from '@/state/theme';
 import { FAITHS } from '@/data/faiths';
 import { DAILY_PRACTICE } from '@/data/practice';
 import { toast } from 'sonner';
@@ -12,6 +13,8 @@ import { useState } from 'react';
 const Profile = () => {
   const nav = useNavigate();
   const { faith, denomination, city, interests, bookmarks, rsvped, fasts, reminders, toggleReminder, addFast, reset } = useUser();
+  const { theme, toggle: toggleTheme } = useTheme();
+  const isDark = theme === 'dark';
   const [showFastForm, setShowFastForm] = useState(false);
   const [fastDate, setFastDate] = useState(new Date().toISOString().slice(0,10));
   const [fastType, setFastType] = useState('Day fast');
@@ -118,6 +121,22 @@ const Profile = () => {
               </li>
             ))}
           </ul>
+        </Card>
+
+        {/* Appearance */}
+        <Card className="p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="h-9 w-9 grid place-items-center rounded-full bg-primary/10 text-primary">
+                {isDark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+              </span>
+              <div>
+                <p className="text-sm font-medium">Dark mode</p>
+                <p className="text-[11px] text-muted-foreground">{isDark ? 'On — easier on the eyes' : 'Off — bright and serene'}</p>
+              </div>
+            </div>
+            <Switch checked={isDark} onCheckedChange={toggleTheme} aria-label="Toggle dark mode" />
+          </div>
         </Card>
 
         {/* Saved & RSVPs */}

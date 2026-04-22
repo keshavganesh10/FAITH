@@ -3,14 +3,15 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import { ChevronLeft, Bookmark, Share2, Type } from 'lucide-react';
 import { useUser } from '@/state/user';
 import { SCRIPTURES } from '@/data/scriptures';
-import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import { ShareSheet } from '@/components/ShareSheet';
 
 const ScriptureReader = () => {
   const { id } = useParams();
   const nav = useNavigate();
   const { faith, bookmarks, toggleBookmark } = useUser();
   const [size, setSize] = useState(0);
+  const [shareOpen, setShareOpen] = useState(false);
 
   const passage = useMemo(() => {
     if (!faith) return null;
@@ -44,7 +45,7 @@ const ScriptureReader = () => {
           <button onClick={() => toggleBookmark(passage.id)} className="h-10 w-10 grid place-items-center rounded-full hover:bg-muted" aria-label="Bookmark">
             <Bookmark className={cn('h-4 w-4', bookmarked && 'fill-accent text-accent')} />
           </button>
-          <button onClick={() => { navigator.clipboard?.writeText(`${passage.text} — ${passage.reference}`); toast.success('Passage copied'); }} className="h-10 w-10 grid place-items-center rounded-full hover:bg-muted" aria-label="Share">
+          <button onClick={() => setShareOpen(true)} className="h-10 w-10 grid place-items-center rounded-full hover:bg-muted" aria-label="Share">
             <Share2 className="h-4 w-4" />
           </button>
         </div>
@@ -58,6 +59,8 @@ const ScriptureReader = () => {
           {passage.text}
         </p>
       </article>
+
+      <ShareSheet open={shareOpen} onOpenChange={setShareOpen} text={passage.text} reference={passage.reference} />
     </div>
   );
 };
