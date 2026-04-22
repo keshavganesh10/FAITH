@@ -2,9 +2,10 @@ import { useMemo, useState } from 'react';
 import { MapPin, Calendar } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { EVENTS, EventType } from '@/data/community';
+import { EVENTS, EventType, CommunityEvent } from '@/data/community';
 import { useUser } from '@/state/user';
 import { cn } from '@/lib/utils';
+import { RsvpDialog } from '@/components/RsvpDialog';
 
 const FILTERS: { id: EventType | 'all'; label: string }[] = [
   { id: 'all', label: 'All' },
@@ -17,6 +18,8 @@ const FILTERS: { id: EventType | 'all'; label: string }[] = [
 const Community = () => {
   const { faith, rsvped, toggleRSVP, city } = useUser();
   const [filter, setFilter] = useState<EventType | 'all'>('all');
+  const [active, setActive] = useState<CommunityEvent | null>(null);
+  const [open, setOpen] = useState(false);
 
   const events = useMemo(() => {
     return EVENTS
@@ -73,7 +76,12 @@ const Community = () => {
                   <span className="inline-flex items-center gap-1"><Calendar className="h-3 w-3" />{d.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' })}</span>
                   <span className="inline-flex items-center gap-1"><MapPin className="h-3 w-3" />{e.distanceKm} km</span>
                 </div>
-                <Button onClick={() => toggleRSVP(e.id)} size="sm" variant={going ? 'secondary' : 'default'} className="rounded-full h-8 px-4 text-xs">
+                <Button
+                  onClick={() => { setActive(e); setOpen(true); }}
+                  size="sm"
+                  variant={going ? 'secondary' : 'default'}
+                  className="rounded-full h-8 px-4 text-xs"
+                >
                   {going ? 'Going ✓' : 'RSVP'}
                 </Button>
               </div>
@@ -81,6 +89,15 @@ const Community = () => {
           );
         })}
       </div>
+
+      <RsvpDialog
+        event={active}
+        open={open}
+        onOpenChange={setOpen}
+        going={active ? rsvped.includes(active.id) : false}
+        onConfirm={() => active && toggleRSVP(active.id)}
+        onCancel={() => active && toggleRSVP(active.id)}
+      />
     </div>
   );
 };
