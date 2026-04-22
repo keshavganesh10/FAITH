@@ -18,7 +18,7 @@ const Welcome = () => {
 
         <div className="relative z-10 flex-1 flex flex-col items-center justify-between px-8 pt-20 pb-10 text-center">
           <div className="animate-float-in">
-            <p className="font-display text-sm tracking-[0.4em] uppercase text-gold">A modern hub</p>
+            <p className="font-display text-sm tracking-[0.4em] uppercase text-sky-950">A modern hub</p>
             <h1 className="font-display font-semibold text-7xl mt-3 tracking-tight text-gold" style={{ letterSpacing: '0.05em' }}>
               FAITH
             </h1>
