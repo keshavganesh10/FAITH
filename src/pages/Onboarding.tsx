@@ -120,8 +120,8 @@ const Onboarding = () => {
         )}
       </div>
 
-      <div className="px-6 pb-8 pt-2">
-        <Button onClick={next} disabled={!canNext} size="lg" className="w-full h-13 rounded-full">
+      <div className="px-5 pb-6 pt-3">
+        <Button onClick={next} disabled={!canNext} size="lg" className="w-full h-16 rounded-2xl text-base font-semibold shadow-elevated">
           {step === 3 ? 'Enter FAITH' : 'Continue'}
         </Button>
       </div>

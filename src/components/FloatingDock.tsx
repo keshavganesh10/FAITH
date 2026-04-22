@@ -13,9 +13,9 @@ const tabs = [
 export const FloatingDock = () => {
   const loc = useLocation();
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-3 z-30 flex justify-center px-4">
+    <div className="pointer-events-none absolute inset-x-0 bottom-2 z-30 flex justify-center px-2">
       <nav
-        className="pointer-events-auto flex items-center gap-1 rounded-full border border-border/60 bg-card/80 px-2 py-2 shadow-elevated backdrop-blur-xl supports-[backdrop-filter]:bg-card/60"
+        className="pointer-events-auto flex w-full items-center justify-between gap-1 rounded-2xl border border-border/60 bg-card/80 px-2 py-1.5 shadow-elevated backdrop-blur-xl supports-[backdrop-filter]:bg-card/60"
         aria-label="Primary"
       >
         {tabs.map(({ to, label, icon: Icon, end }) => {
@@ -27,21 +27,12 @@ export const FloatingDock = () => {
               end={end}
               aria-label={label}
               className={cn(
-                'group relative grid h-11 place-items-center rounded-full transition-all duration-300',
-                isActive ? 'w-24 bg-primary text-primary-foreground shadow-soft' : 'w-11 text-muted-foreground hover:text-foreground hover:bg-muted/60'
+                'group relative flex flex-1 flex-col items-center justify-center gap-0.5 rounded-xl py-1.5 transition-all duration-300',
+                isActive ? 'bg-primary text-primary-foreground shadow-soft' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'
               )}
             >
-              <span className="flex items-center gap-1.5 px-3">
-                <Icon className={cn('h-[18px] w-[18px] transition-transform', isActive && 'scale-110')} />
-                <span
-                  className={cn(
-                    'overflow-hidden text-[11px] font-medium tracking-wide transition-all',
-                    isActive ? 'max-w-[80px] opacity-100' : 'max-w-0 opacity-0'
-                  )}
-                >
-                  {label}
-                </span>
-              </span>
+              <Icon className={cn('h-[18px] w-[18px] transition-transform', isActive && 'scale-110')} />
+              <span className="text-[10px] font-medium tracking-wide leading-none">{label}</span>
             </NavLink>
           );
         })}
