@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { UserProvider, useUser } from "@/state/user";
+import { ThemeProvider } from "@/state/theme";
 import Welcome from "./pages/Welcome";
 import Onboarding from "./pages/Onboarding";
 import AppLayout from "./pages/AppLayout";
@@ -26,29 +27,31 @@ const RequireOnboarding = ({ children }: { children: JSX.Element }) => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <UserProvider>
-        <Toaster />
-        <Sonner position="top-center" />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Welcome />} />
-            <Route path="/onboarding" element={<Onboarding />} />
-            <Route path="/app" element={<RequireOnboarding><AppLayout /></RequireOnboarding>}>
-              <Route index element={<Home />} />
-              <Route path="scriptures" element={<Scriptures />} />
-              <Route path="scriptures/:id" element={<ScriptureReader />} />
-              <Route path="community" element={<Community />} />
-              <Route path="market" element={<Market />} />
-              <Route path="market/basket" element={<Basket />} />
-              <Route path="market/:id" element={<ProductDetail />} />
-              <Route path="profile" element={<Profile />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </UserProvider>
-    </TooltipProvider>
+    <ThemeProvider>
+      <TooltipProvider>
+        <UserProvider>
+          <Toaster />
+          <Sonner position="top-center" />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Welcome />} />
+              <Route path="/onboarding" element={<Onboarding />} />
+              <Route path="/app" element={<RequireOnboarding><AppLayout /></RequireOnboarding>}>
+                <Route index element={<Home />} />
+                <Route path="scriptures" element={<Scriptures />} />
+                <Route path="scriptures/:id" element={<ScriptureReader />} />
+                <Route path="community" element={<Community />} />
+                <Route path="market" element={<Market />} />
+                <Route path="market/basket" element={<Basket />} />
+                <Route path="market/:id" element={<ProductDetail />} />
+                <Route path="profile" element={<Profile />} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </UserProvider>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 

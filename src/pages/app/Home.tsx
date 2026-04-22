@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Bell, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { useUser } from '@/state/user';
 import { FAITHS } from '@/data/faiths';
 import { VERSE_OF_DAY } from '@/data/scriptures';
@@ -7,6 +7,7 @@ import { DAILY_PRACTICE } from '@/data/practice';
 import { EVENTS } from '@/data/community';
 import { PRODUCTS } from '@/data/marketplace';
 import { Card } from '@/components/ui/card';
+import { NotificationsSheet } from '@/components/NotificationsSheet';
 
 const greeting = () => {
   const h = new Date().getHours();
@@ -51,9 +52,7 @@ const Home = () => {
                 {city && ` · ${city.split(',')[0]}`}
               </p>
             </div>
-            <button className="h-10 w-10 grid place-items-center rounded-full bg-primary-foreground/15 backdrop-blur" aria-label="Notifications">
-              <Bell className="h-4 w-4" />
-            </button>
+            <NotificationsSheet />
           </div>
         </div>
       </header>

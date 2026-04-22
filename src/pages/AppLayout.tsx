@@ -1,13 +1,13 @@
 import { Outlet } from 'react-router-dom';
 import { MobileShell } from '@/components/MobileShell';
-import { TabBar } from '@/components/TabBar';
+import { FloatingDock } from '@/components/FloatingDock';
 
 const AppLayout = () => (
   <MobileShell>
-    <main className="flex-1 overflow-y-auto pb-2">
+    <main className="flex-1 overflow-y-auto pb-24">
       <Outlet />
     </main>
-    <TabBar />
+    <FloatingDock />
   </MobileShell>
 );
 
