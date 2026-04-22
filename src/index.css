@@ -129,3 +129,13 @@
   to { opacity: 1; transform: translateY(0); }
 }
 .animate-float-in { animation: float-in 0.6s var(--transition-smooth) both; }
+
+/* hide scrollbars on horizontal rails */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Leaflet inside our themed cards */
+.leaflet-container { background: hsl(var(--muted)); font-family: inherit; }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: hsl(var(--card)); color: hsl(var(--card-foreground)); }
+.leaflet-popup-content { margin: 10px 12px; }
+.leaflet-control-attribution { font-size: 9px; background: hsl(var(--card) / 0.8) !important; }
