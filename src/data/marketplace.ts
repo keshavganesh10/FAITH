@@ -1,142 +1,94 @@
-import type { FaithId } from './faiths';
+// UK-based Hindu puja & festival marketplace.
 
-export type ProductCategory = 'festival-kits' | 'ornaments' | 'prayer-items' | 'books';
-
-export interface Product {
-  id: string;
-  faith: FaithId | 'all';
-  category: ProductCategory;
-  name: string;
-  vendor: string;        // matches Vendor.name
-  vendorCity: string;
-  price: number;         // GBP
-  emoji: string;
-  image: string;         // photo
-  description: string;
-  seasonal?: string;
-}
+export type Category = 'Puja Thalis' | 'Murtis' | 'Incense & Oils' | 'Festival Items' | 'Books' | 'Apparel';
 
 export interface Vendor {
   id: string;
   name: string;
   city: string;
-  bio: string;
-  avatar: string;
+  rating: number;
+  reviews: number;
+  blurb: string;
   lat: number;
   lng: number;
-  rating: number;        // 0-5
-  craft: string;         // e.g. "Brass · Devotional"
 }
 
-export const CATEGORY_LABELS: Record<ProductCategory, string> = {
-  'festival-kits': 'Festival Kits',
-  'ornaments': 'Ornaments',
-  'prayer-items': 'Prayer Items',
-  'books': 'Books',
-};
+export interface Product {
+  id: string;
+  name: string;
+  category: Category;
+  vendorId: string;
+  price: number;            // GBP
+  emoji: string;
+  image?: string;
+  seasonal?: 'Diwali' | 'Navratri' | 'Holi' | 'Janmashtami';
+  description: string;
+  rating: number;
+  reviews: number;
+}
+
+const img = (q: string, sig: number) =>
+  `https://images.unsplash.com/photo-${q}?auto=format&fit=crop&w=600&q=70&sig=${sig}`;
 
 export const VENDORS: Vendor[] = [
-  { id: 'v1', name: 'Anjali Crafts', city: 'Leicester',
-    bio: 'Mother–daughter studio making brass diyas and puja kits since 1998.',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop',
-    lat: 52.6369, lng: -1.1398, rating: 4.9, craft: 'Brass · Puja' },
-  { id: 'v2', name: 'Gokul Decor', city: 'Birmingham',
-    bio: 'Hand-painted door hangings and home decor by a small artisan team.',
-    avatar: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=200&h=200&fit=crop',
-    lat: 52.4862, lng: -1.8904, rating: 4.7, craft: 'Textiles · Decor' },
-  { id: 'v3', name: 'Evergreen Workshop', city: 'York',
-    bio: 'Family-run candlemakers crafting Advent and liturgical sets.',
-    avatar: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=200&h=200&fit=crop',
-    lat: 53.9590, lng: -1.0815, rating: 4.8, craft: 'Candles · Liturgy' },
-  { id: 'v4', name: 'Noor Textiles', city: 'Bradford',
-    bio: 'Velvet prayer mats hand-knotted by women co-op weavers.',
-    avatar: 'https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=200&h=200&fit=crop',
-    lat: 53.7960, lng: -1.7594, rating: 4.9, craft: 'Textiles · Prayer mats' },
-  { id: 'v5', name: 'Barakah Foods', city: 'London',
-    bio: 'Ramadan and iftar food gifts, fair-trade dates and rose syrups.',
-    avatar: 'https://images.unsplash.com/photo-1593007677747-e8e8b3a78d2e?w=200&h=200&fit=crop',
-    lat: 51.5074, lng: -0.1278, rating: 4.6, craft: 'Food · Gifting' },
-  { id: 'v6', name: 'Khalsa Crafts', city: 'Wolverhampton',
-    bio: 'Embroidered rumālas and seva supplies by a sevadar family.',
-    avatar: 'https://images.unsplash.com/photo-1548142813-c348350df52b?w=200&h=200&fit=crop',
-    lat: 52.5862, lng: -2.1288, rating: 4.8, craft: 'Embroidery · Seva' },
-  { id: 'v7', name: 'Lotus & Stone', city: 'Bristol',
-    bio: 'Hand-hammered singing bowls and meditation tools.',
-    avatar: 'https://images.unsplash.com/photo-1545389336-cf090694435e?w=200&h=200&fit=crop',
-    lat: 51.4545, lng: -2.5879, rating: 4.9, craft: 'Brass · Meditation' },
-  { id: 'v8', name: 'Shalom House', city: 'Manchester',
-    bio: 'Hanukkah, Pesach and Shabbat household pieces.',
-    avatar: 'https://images.unsplash.com/photo-1591128846807-1f9f87b73f80?w=200&h=200&fit=crop',
-    lat: 53.4808, lng: -2.2426, rating: 4.7, craft: 'Brass · Judaica' },
-  { id: 'v9', name: 'Open Page Press', city: 'Edinburgh',
-    bio: 'Independent publisher of interfaith and contemplative books.',
-    avatar: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=200&h=200&fit=crop',
-    lat: 55.9533, lng: -3.1883, rating: 4.8, craft: 'Books · Press' },
-  { id: 'v10', name: 'Bethlehem Artisans', city: 'London',
-    bio: 'Olivewood pieces from a fair-trade Palestinian co-op.',
-    avatar: 'https://images.unsplash.com/photo-1438032005730-c779502df39b?w=200&h=200&fit=crop',
-    lat: 51.5074, lng: -0.1278, rating: 4.9, craft: 'Olivewood · Fair-trade' },
+  { id: 'v-pooja-london', name: 'Pooja Bazaar London', city: 'Wembley, London', rating: 4.8, reviews: 412,
+    blurb: 'Family-run since 1991. Largest selection of brass murtis in West London.', lat: 51.5582, lng: -0.2964 },
+  { id: 'v-shree-bham', name: 'Shree Mandir Supplies', city: 'Birmingham', rating: 4.7, reviews: 287,
+    blurb: 'Wholesale puja items at retail-friendly prices. NHSF partner.', lat: 52.4862, lng: -1.8904 },
+  { id: 'v-divine-leics', name: 'Divine Touch Leicester', city: 'Leicester', rating: 4.9, reviews: 631,
+    blurb: 'Curated Belgaum brass and South Indian bronze.', lat: 52.6369, lng: -1.1398 },
+  { id: 'v-aroma-mcr', name: 'Aroma House Manchester', city: 'Manchester', rating: 4.6, reviews: 198,
+    blurb: 'Hand-rolled incense, cold-pressed oils, organic dhoop.', lat: 53.4808, lng: -2.2426 },
+  { id: 'v-vedic-books', name: 'Vedic Books UK', city: 'Online · ships UK-wide', rating: 4.9, reviews: 1124,
+    blurb: 'English translations of every major sampradaya.', lat: 51.5074, lng: -0.1278 },
 ];
 
 export const PRODUCTS: Product[] = [
-  { id: 'p1', faith: 'hinduism', category: 'festival-kits', name: 'Diwali Puja Kit',
-    vendor: 'Anjali Crafts', vendorCity: 'Leicester', price: 34.0, emoji: '🪔',
-    image: 'https://images.unsplash.com/photo-1605302301730-9d1f1d3e3a93?w=600&h=600&fit=crop',
-    description: 'Brass diyas, incense, kumkum, rice and a pocket Lakshmi prayer card — everything for a home Diwali puja.',
-    seasonal: 'Diwali' },
-  { id: 'p2', faith: 'hinduism', category: 'ornaments', name: 'Hand-painted Toran',
-    vendor: 'Gokul Decor', vendorCity: 'Birmingham', price: 18.5, emoji: '🌺',
-    image: 'https://images.unsplash.com/photo-1574236170880-faaf5fbe73d6?w=600&h=600&fit=crop',
-    description: 'A door-hanging with marigolds and bells, hand-painted by artisans.' },
-  { id: 'p3', faith: 'christianity', category: 'festival-kits', name: 'Advent Candle Set',
-    vendor: 'Evergreen Workshop', vendorCity: 'York', price: 22.0, emoji: '🕯️',
-    image: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?w=600&h=600&fit=crop',
-    description: 'Four purple and one rose candle with a wooden wreath base.', seasonal: 'Advent' },
-  { id: 'p4', faith: 'islam', category: 'prayer-items', name: 'Hand-knotted Prayer Mat',
-    vendor: 'Noor Textiles', vendorCity: 'Bradford', price: 45.0, emoji: '🕌',
-    image: 'https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=600&h=600&fit=crop',
-    description: 'A soft velvet prayer mat with traditional geometric patterning.' },
-  { id: 'p5', faith: 'islam', category: 'festival-kits', name: 'Ramadan Iftar Box',
-    vendor: 'Barakah Foods', vendorCity: 'London', price: 28.0, emoji: '🌙',
-    image: 'https://images.unsplash.com/photo-1593007677747-e8e8b3a78d2e?w=600&h=600&fit=crop',
-    description: 'Dates, dried fruit, rose syrup and a daily reflection booklet.', seasonal: 'Ramadan' },
-  { id: 'p6', faith: 'sikhism', category: 'prayer-items', name: 'Cotton Rumāla Sahib',
-    vendor: 'Khalsa Crafts', vendorCity: 'Wolverhampton', price: 32.0, emoji: '📿',
-    image: 'https://images.unsplash.com/photo-1609938733512-bb70bc77c8c5?w=600&h=600&fit=crop',
-    description: 'A respectful covering, finely embroidered.' },
-  { id: 'p7', faith: 'buddhism', category: 'ornaments', name: 'Brass Singing Bowl',
-    vendor: 'Lotus & Stone', vendorCity: 'Bristol', price: 39.0, emoji: '🔔',
-    image: 'https://images.unsplash.com/photo-1545389336-cf090694435e?w=600&h=600&fit=crop',
-    description: 'A 5-inch hand-hammered bowl with mallet, for meditation practice.' },
-  { id: 'p8', faith: 'judaism', category: 'festival-kits', name: 'Hanukkah Menorah Set',
-    vendor: 'Shalom House', vendorCity: 'Manchester', price: 48.0, emoji: '🕎',
-    image: 'https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=600&h=600&fit=crop',
-    description: 'A brass nine-branch menorah with a box of coloured candles.', seasonal: 'Hanukkah' },
-  { id: 'p9', faith: 'all', category: 'books', name: 'World Scriptures: A Reader',
-    vendor: 'Open Page Press', vendorCity: 'Edinburgh', price: 16.0, emoji: '📖',
-    image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&h=600&fit=crop',
-    description: 'Curated short passages from every major tradition, with brief commentary.' },
-  { id: 'p10', faith: 'christianity', category: 'ornaments', name: 'Olivewood Cross',
-    vendor: 'Bethlehem Artisans', vendorCity: 'London', price: 14.0, emoji: '✝️',
-    image: 'https://images.unsplash.com/photo-1438032005730-c779502df39b?w=600&h=600&fit=crop',
-    description: 'Hand-carved from olive wood by a fair-trade cooperative.' },
-  { id: 'p11', faith: 'hinduism', category: 'prayer-items', name: 'Sandalwood Mala',
-    vendor: 'Gokul Decor', vendorCity: 'Birmingham', price: 24.0, emoji: '📿',
-    image: 'https://images.unsplash.com/photo-1604908554049-fc46f15bd95e?w=600&h=600&fit=crop',
-    description: '108 sandalwood beads, hand-strung with a tassel — for daily japa.' },
-  { id: 'p12', faith: 'islam', category: 'books', name: "Children's Stories of the Prophets",
-    vendor: 'Open Page Press', vendorCity: 'Edinburgh', price: 19.0, emoji: '📚',
-    image: 'https://images.unsplash.com/photo-1591824438708-ce405f36ba3d?w=600&h=600&fit=crop',
-    description: 'Beautifully illustrated stories for ages 6+.' },
-  { id: 'p13', faith: 'buddhism', category: 'books', name: 'The Dhammapada — Pocket Edition',
-    vendor: 'Open Page Press', vendorCity: 'Edinburgh', price: 12.0, emoji: '📖',
-    image: 'https://images.unsplash.com/photo-1532375672259-d2b1d7a02f9b?w=600&h=600&fit=crop',
-    description: 'A small-format edition with a contemporary translation.' },
-  { id: 'p14', faith: 'sikhism', category: 'books', name: 'Japji Sahib — Dual Script',
-    vendor: 'Open Page Press', vendorCity: 'Edinburgh', price: 14.0, emoji: '📕',
-    image: 'https://images.unsplash.com/photo-1609938733512-bb70bc77c8c5?w=600&h=600&fit=crop',
-    description: 'Gurmukhi and English side-by-side with brief commentary.' },
+  { id: 'p-thali-brass', name: 'Hand-etched Brass Puja Thali Set', category: 'Puja Thalis', vendorId: 'v-divine-leics',
+    price: 38.00, emoji: '🪔', rating: 4.9, reviews: 142,
+    image: img('1604608672516-f1d2f49bc31a', 11),
+    description: '7-piece set: thali, kalash, ghee diya, agarbatti stand, kumkum-haldi katoris and bell. Hand-etched in Belgaum.' },
+  { id: 'p-murti-ganesh', name: 'Marble Ganesha Murti — 6 inch', category: 'Murtis', vendorId: 'v-pooja-london',
+    price: 65.00, emoji: '🐘', rating: 4.8, reviews: 89,
+    image: img('1582553081398-7d1bb1f93a9c', 12),
+    description: 'White Makrana marble Ganesha, suitable for home mandir. Hand-painted gold detailing.' },
+  { id: 'p-murti-krishna', name: 'Brass Bal Krishna with Flute', category: 'Murtis', vendorId: 'v-divine-leics',
+    price: 42.00, emoji: '🪈', rating: 4.9, reviews: 67,
+    image: img('1606293459339-aa5d34a7b0e1', 13),
+    description: 'Solid brass, 5 inches. Comes with a velvet asana mat.' },
+  { id: 'p-incense-chandan', name: 'Chandan Hand-rolled Agarbatti (pack of 12)', category: 'Incense & Oils', vendorId: 'v-aroma-mcr',
+    price: 9.50, emoji: '🪵', rating: 4.7, reviews: 320,
+    image: img('1602874801006-9c75e54ed3f3', 14),
+    description: 'Real Mysore sandalwood, no chemicals. 40-minute burn per stick.' },
+  { id: 'p-oil-til', name: 'Cold-pressed Til Oil for Diya — 500ml', category: 'Incense & Oils', vendorId: 'v-aroma-mcr',
+    price: 12.00, emoji: '🛢️', rating: 4.6, reviews: 88,
+    description: 'Traditional sesame oil for daily diya lighting. Smokeless burn.' },
+  { id: 'p-diwali-kit', name: 'Diwali Home Kit', category: 'Festival Items', vendorId: 'v-pooja-london',
+    price: 45.00, emoji: '🎆', rating: 4.9, reviews: 210, seasonal: 'Diwali',
+    image: img('1572979441-d3b3f8e5fae0', 15),
+    description: 'Lakshmi-Ganesh idols, 24 clay diyas, rangoli powders (5 colours), wicks and toran.' },
+  { id: 'p-holi-colours', name: 'Organic Gulal — 8 colours', category: 'Festival Items', vendorId: 'v-shree-bham',
+    price: 18.00, emoji: '🌈', rating: 4.7, reviews: 156, seasonal: 'Holi',
+    image: img('1521120098171-d4cd1a6b35e2', 16),
+    description: 'Cornflour-based, skin-safe, washes out of clothes. 100g of each colour.' },
+  { id: 'p-navratri-chania', name: 'Navratri Chaniya Choli', category: 'Apparel', vendorId: 'v-shree-bham',
+    price: 89.00, emoji: '👗', rating: 4.8, reviews: 64, seasonal: 'Navratri',
+    description: 'Hand-mirrored Gujarati chaniya choli. Three-piece set, available sizes XS–XL.' },
+  { id: 'p-gita-as-it-is', name: 'Bhagavad Gita As It Is (English)', category: 'Books', vendorId: 'v-vedic-books',
+    price: 19.99, emoji: '📖', rating: 4.9, reviews: 982,
+    description: 'Word-for-word Sanskrit, translation and Srila Prabhupada\'s commentary. 900 pages, hardback.' },
+  { id: 'p-upanishads', name: 'The Principal Upanishads — Easwaran', category: 'Books', vendorId: 'v-vedic-books',
+    price: 14.50, emoji: '📚', rating: 4.8, reviews: 412,
+    description: 'Eknath Easwaran\'s clear, contemplative translation. Penguin Classics edition.' },
+  { id: 'p-rudraksha', name: 'Rudraksha Mala — 108 beads', category: 'Apparel', vendorId: 'v-divine-leics',
+    price: 28.00, emoji: '📿', rating: 4.7, reviews: 178,
+    description: 'Genuine 5-mukhi Nepali rudraksha, knotted on cotton thread for japa.' },
+  { id: 'p-janmashtami', name: 'Janmashtami Jhula Set', category: 'Festival Items', vendorId: 'v-pooja-london',
+    price: 32.00, emoji: '🌙', rating: 4.8, reviews: 41, seasonal: 'Janmashtami',
+    description: 'Decorated cradle for Bal Krishna with cushion, peacock-feather garland and bells.' },
 ];
 
-export const getVendor = (name: string): Vendor | undefined =>
-  VENDORS.find(v => v.name === name);
+export const CATEGORIES: Category[] = ['Puja Thalis', 'Murtis', 'Incense & Oils', 'Festival Items', 'Books', 'Apparel'];
+
+export const findVendor = (id: string) => VENDORS.find(v => v.id === id);
+export const findProduct = (id: string) => PRODUCTS.find(p => p.id === id);

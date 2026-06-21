@@ -1,31 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,500;6..12,600;6..12,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* FAITH design system — serene sky, parchment cream, muted gold. All HSL. */
+/* FAITH — UK Hindu hub. Sky blue · cloud white · parchment cream · warm saffron. */
 @layer base {
   :root {
-    --background: 39 38% 96%;          /* parchment cream */
-    --foreground: 215 35% 18%;         /* deep ink blue */
+    --background: 39 38% 96%;
+    --foreground: 215 35% 16%;
 
     --card: 40 50% 98%;
-    --card-foreground: 215 35% 18%;
+    --card-foreground: 215 35% 16%;
 
     --popover: 40 50% 98%;
-    --popover-foreground: 215 35% 18%;
+    --popover-foreground: 215 35% 16%;
 
-    --primary: 210 55% 32%;            /* deep sky blue */
+    --primary: 210 55% 32%;
     --primary-foreground: 39 50% 97%;
 
-    --secondary: 200 40% 88%;          /* soft cloud */
+    --secondary: 200 40% 90%;
     --secondary-foreground: 215 35% 18%;
 
-    --muted: 38 28% 90%;
+    --muted: 38 28% 91%;
     --muted-foreground: 215 18% 42%;
 
-    --accent: 38 60% 55%;              /* muted gold */
+    --accent: 28 85% 56%;            /* warm saffron */
     --accent-foreground: 215 35% 14%;
 
     --destructive: 0 65% 48%;
@@ -37,26 +37,26 @@
 
     --radius: 1rem;
 
-    /* Brand-specific */
     --sky-deep: 212 60% 28%;
     --sky-mid: 205 55% 55%;
-    --sky-soft: 200 60% 86%;
+    --sky-soft: 200 60% 88%;
     --cream: 39 50% 95%;
     --parchment: 36 40% 90%;
-    --gold: 38 65% 55%;
-    --gold-soft: 40 55% 78%;
+    --saffron: 28 85% 56%;
+    --saffron-soft: 32 90% 82%;
+    --kumkum: 8 75% 50%;
 
-    --gradient-sky: linear-gradient(180deg, hsl(205 70% 78%) 0%, hsl(200 65% 88%) 45%, hsl(39 50% 95%) 100%);
-    --gradient-dawn: linear-gradient(135deg, hsl(212 55% 38%) 0%, hsl(205 55% 60%) 60%, hsl(38 60% 78%) 100%);
+    --gradient-sky: linear-gradient(180deg, hsl(205 70% 80%) 0%, hsl(200 65% 90%) 45%, hsl(39 50% 96%) 100%);
+    --gradient-dawn: linear-gradient(135deg, hsl(212 55% 36%) 0%, hsl(205 55% 60%) 55%, hsl(28 85% 70%) 100%);
+    --gradient-saffron: linear-gradient(135deg, hsl(28 90% 58%) 0%, hsl(12 75% 52%) 100%);
     --gradient-card: linear-gradient(180deg, hsl(40 55% 98%) 0%, hsl(38 40% 94%) 100%);
 
     --shadow-soft: 0 4px 24px -8px hsl(212 40% 30% / 0.15);
     --shadow-elevated: 0 12px 40px -12px hsl(212 50% 25% / 0.25);
-    --shadow-gold: 0 6px 24px -8px hsl(38 65% 50% / 0.35);
+    --shadow-saffron: 0 6px 24px -8px hsl(28 85% 50% / 0.4);
 
     --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 
-    /* sidebar (kept defaults) */
     --sidebar-background: 39 38% 96%;
     --sidebar-foreground: 215 35% 18%;
     --sidebar-primary: 210 55% 32%;
@@ -68,25 +68,60 @@
   }
 
   .dark {
-    --background: 215 40% 10%;
-    --foreground: 39 40% 94%;
-    --card: 215 35% 13%;
-    --card-foreground: 39 40% 94%;
-    --popover: 215 35% 13%;
-    --popover-foreground: 39 40% 94%;
-    --primary: 200 60% 70%;
-    --primary-foreground: 215 40% 10%;
-    --secondary: 215 25% 22%;
-    --secondary-foreground: 39 40% 94%;
-    --muted: 215 25% 18%;
+    --background: 217 38% 8%;
+    --foreground: 39 35% 92%;
+
+    --card: 217 32% 12%;
+    --card-foreground: 39 35% 92%;
+
+    --popover: 217 32% 12%;
+    --popover-foreground: 39 35% 92%;
+
+    --primary: 200 70% 68%;
+    --primary-foreground: 217 38% 10%;
+
+    --secondary: 217 25% 20%;
+    --secondary-foreground: 39 35% 92%;
+
+    --muted: 217 25% 16%;
     --muted-foreground: 215 15% 65%;
-    --accent: 38 60% 60%;
-    --accent-foreground: 215 40% 10%;
-    --destructive: 0 62% 45%;
-    --destructive-foreground: 39 40% 94%;
-    --border: 215 25% 22%;
-    --input: 215 25% 22%;
-    --ring: 200 60% 70%;
+
+    --accent: 28 90% 62%;
+    --accent-foreground: 217 38% 10%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 39 35% 92%;
+
+    --border: 217 22% 22%;
+    --input: 217 22% 22%;
+    --ring: 200 70% 68%;
+
+    --sky-deep: 200 70% 68%;
+    --sky-mid: 205 55% 55%;
+    --sky-soft: 217 30% 22%;
+    --cream: 217 25% 14%;
+    --parchment: 217 22% 18%;
+    --saffron: 28 90% 62%;
+    --saffron-soft: 28 50% 30%;
+    --kumkum: 8 75% 55%;
+
+    --gradient-sky: linear-gradient(180deg, hsl(217 40% 14%) 0%, hsl(217 35% 10%) 100%);
+    --gradient-dawn: linear-gradient(135deg, hsl(217 50% 22%) 0%, hsl(205 45% 35%) 55%, hsl(28 60% 45%) 100%);
+    --gradient-saffron: linear-gradient(135deg, hsl(28 80% 55%) 0%, hsl(12 65% 45%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(217 32% 13%) 0%, hsl(217 28% 10%) 100%);
+
+    --shadow-soft: 0 4px 24px -8px hsl(0 0% 0% / 0.5);
+    --shadow-elevated: 0 12px 40px -12px hsl(0 0% 0% / 0.7);
+    --shadow-saffron: 0 6px 24px -8px hsl(28 85% 40% / 0.5);
+
+    --sidebar-background: 217 38% 8%;
+    --sidebar-foreground: 39 35% 92%;
+    --sidebar-primary: 200 70% 68%;
+    --sidebar-primary-foreground: 217 38% 10%;
+    --sidebar-accent: 217 25% 16%;
+    --sidebar-accent-foreground: 39 35% 92%;
+    --sidebar-border: 217 22% 22%;
+    --sidebar-ring: 200 70% 68%;
   }
 }
 
@@ -95,7 +130,7 @@
   html, body, #root { height: 100%; }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Nunito Sans', 'Avenir Next', 'Avenir', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-feature-settings: 'ss01', 'cv11';
     letter-spacing: -0.005em;
     -webkit-font-smoothing: antialiased;
@@ -111,16 +146,22 @@
 @layer utilities {
   .bg-gradient-sky { background: var(--gradient-sky); }
   .bg-gradient-dawn { background: var(--gradient-dawn); }
+  .bg-gradient-saffron { background: var(--gradient-saffron); }
   .bg-gradient-card { background: var(--gradient-card); }
   .shadow-soft { box-shadow: var(--shadow-soft); }
   .shadow-elevated { box-shadow: var(--shadow-elevated); }
-  .shadow-gold { box-shadow: var(--shadow-gold); }
+  .shadow-saffron { box-shadow: var(--shadow-saffron); }
+  .text-saffron { color: hsl(var(--saffron)); }
+  .bg-saffron { background-color: hsl(var(--saffron)); }
   .texture-paper {
     background-image:
-      radial-gradient(hsl(38 30% 80% / 0.25) 1px, transparent 1px),
-      radial-gradient(hsl(38 30% 75% / 0.15) 1px, transparent 1px);
+      radial-gradient(hsl(var(--foreground) / 0.06) 1px, transparent 1px),
+      radial-gradient(hsl(var(--foreground) / 0.04) 1px, transparent 1px);
     background-size: 24px 24px, 13px 13px;
     background-position: 0 0, 7px 11px;
+  }
+  .mandala-watermark {
+    background-image: radial-gradient(circle at 50% 50%, hsl(var(--accent) / 0.04) 0, transparent 60%);
   }
 }
 
@@ -130,12 +171,16 @@
 }
 .animate-float-in { animation: float-in 0.6s var(--transition-smooth) both; }
 
-/* hide scrollbars on horizontal rails */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Leaflet inside our themed cards */
 .leaflet-container { background: hsl(var(--muted)); font-family: inherit; }
 .leaflet-popup-content-wrapper, .leaflet-popup-tip { background: hsl(var(--card)); color: hsl(var(--card-foreground)); }
 .leaflet-popup-content { margin: 10px 12px; }
 .leaflet-control-attribution { font-size: 9px; background: hsl(var(--card) / 0.8) !important; }
+.dark .leaflet-tile { filter: brightness(0.7) invert(1) contrast(0.9) hue-rotate(180deg) saturate(0.6) brightness(0.9); }

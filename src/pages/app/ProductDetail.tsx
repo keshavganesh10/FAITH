@@ -1,64 +1,78 @@
-import { useNavigate, useParams, Link } from 'react-router-dom';
-import { ChevronLeft, MapPin, ShoppingBag, Star } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { PRODUCTS, CATEGORY_LABELS, getVendor } from '@/data/marketplace';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { ChevronLeft, Star, Plus, Minus, ShoppingBag } from 'lucide-react';
+import { useState } from 'react';
+import { findProduct, findVendor } from '@/data/marketplace';
 import { useUser } from '@/state/user';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { toast } from 'sonner';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const nav = useNavigate();
-  const { addToBasket, basket } = useUser();
-  const product = PRODUCTS.find(p => p.id === id);
+  const product = id ? findProduct(id) : undefined;
+  const vendor = product ? findVendor(product.vendorId) : undefined;
+  const { addToBasket } = useUser();
+  const [qty, setQty] = useState(1);
 
   if (!product) return (
-    <div className="p-8 text-center">
-      <p>Product not found.</p>
-      <Link to="/app/market" className="text-primary text-sm">Back to market</Link>
+    <div className="p-8 text-center text-muted-foreground">
+      Product not found.{' '}<Link to="/app/market" className="text-primary">Back</Link>
     </div>
   );
 
-  const vendor = getVendor(product.vendor);
-
   return (
-    <div className="min-h-full flex flex-col bg-background">
-      <div className="relative aspect-square bg-muted">
-        <img src={product.image} alt={product.name} className="absolute inset-0 h-full w-full object-cover" />
-        <button onClick={() => nav(-1)} className="absolute top-4 left-4 h-10 w-10 grid place-items-center rounded-full bg-background/90 backdrop-blur shadow-soft">
-          <ChevronLeft className="h-5 w-5" />
-        </button>
-        <Link to="/app/market/basket" className="absolute top-4 right-4 h-10 w-10 grid place-items-center rounded-full bg-background/90 backdrop-blur shadow-soft">
-          <ShoppingBag className="h-4 w-4" />
-          {basket.length > 0 && <span className="absolute -top-1 -right-1 h-5 min-w-5 px-1 grid place-items-center rounded-full bg-accent text-accent-foreground text-[10px] font-semibold">{basket.length}</span>}
-        </Link>
+    <div className="pb-32">
+      <header className="sticky top-0 bg-background/95 backdrop-blur z-20 px-3 py-3 flex items-center border-b border-border/50">
+        <button onClick={() => nav(-1)} className="h-10 w-10 grid place-items-center rounded-full hover:bg-muted"><ChevronLeft className="h-5 w-5" /></button>
+        <p className="flex-1 text-center text-[12px] text-muted-foreground truncate">{product.category}</p>
+        <div className="w-10" />
+      </header>
+
+      <div className="aspect-square bg-gradient-card grid place-items-center text-7xl">
+        {product.image
+          ? <img src={product.image} alt={product.name} className="h-full w-full object-cover" />
+          : <span>{product.emoji}</span>}
       </div>
 
-      <div className="flex-1 p-5">
-        {product.seasonal && <p className="text-[10px] uppercase tracking-[0.3em] text-accent">For {product.seasonal}</p>}
-        <h1 className="font-display text-2xl text-foreground mt-1 leading-tight">{product.name}</h1>
-        <p className="text-[11px] text-muted-foreground mt-0.5">{CATEGORY_LABELS[product.category]}</p>
-        <p className="font-display text-2xl text-primary mt-2">£{product.price.toFixed(2)}</p>
+      <div className="px-5 pt-4">
+        {product.seasonal && (
+          <span className="inline-block text-[10px] tracking-widest uppercase bg-accent text-accent-foreground px-2 py-0.5 rounded-full">
+            For {product.seasonal}
+          </span>
+        )}
+        <h1 className="font-display text-2xl mt-2 leading-tight">{product.name}</h1>
+        <p className="text-xs text-muted-foreground mt-1 inline-flex items-center gap-1">
+          <Star className="h-3 w-3 fill-accent text-accent" /> {product.rating} · {product.reviews} reviews
+        </p>
+        <p className="font-display text-3xl mt-3">£{product.price.toFixed(2)}</p>
 
-        <div className="mt-4 rounded-2xl border border-border bg-gradient-card p-3 flex items-center gap-3">
-          {vendor && <img src={vendor.avatar} alt="" className="h-12 w-12 rounded-full object-cover border-2 border-card shadow-soft" />}
-          <div className="flex-1 min-w-0">
-            <p className="text-[9px] uppercase tracking-widest text-muted-foreground">Crafted by</p>
-            <p className="font-display text-sm leading-tight">{product.vendor}</p>
-            <p className="text-[10.5px] text-muted-foreground inline-flex items-center gap-1.5 mt-0.5">
-              <span className="inline-flex items-center gap-0.5"><MapPin className="h-2.5 w-2.5" />{product.vendorCity}</span>
-              {vendor && <span className="inline-flex items-center gap-0.5"><Star className="h-2.5 w-2.5 fill-accent text-accent" />{vendor.rating}</span>}
-            </p>
-          </div>
+        <p className="text-sm text-foreground/80 mt-4 leading-relaxed">{product.description}</p>
+
+        {vendor && (
+          <Card className="mt-5 p-3.5">
+            <p className="text-[10px] tracking-widest uppercase text-muted-foreground">Sold by</p>
+            <p className="font-display text-base mt-0.5">{vendor.name}</p>
+            <p className="text-[11px] text-muted-foreground">{vendor.city} · ★ {vendor.rating} ({vendor.reviews})</p>
+            <p className="text-xs text-foreground/80 mt-1.5">{vendor.blurb}</p>
+          </Card>
+        )}
+      </div>
+
+      <div className="absolute inset-x-0 bottom-0 px-5 pb-6 pt-3 bg-gradient-to-t from-background via-background to-transparent flex items-center gap-3">
+        <div className="flex items-center rounded-full border border-border bg-card">
+          <button onClick={() => setQty(q => Math.max(1, q - 1))} className="h-12 w-12 grid place-items-center"><Minus className="h-4 w-4" /></button>
+          <span className="w-6 text-center font-display text-lg">{qty}</span>
+          <button onClick={() => setQty(q => q + 1)} className="h-12 w-12 grid place-items-center"><Plus className="h-4 w-4" /></button>
         </div>
-
-        {vendor && <p className="text-[11px] text-muted-foreground italic mt-2">"{vendor.bio}"</p>}
-
-        <p className="text-[13px] leading-relaxed text-foreground/85 mt-4">{product.description}</p>
-      </div>
-
-      <div className="p-4 border-t border-border bg-card sticky bottom-0">
-        <Button onClick={() => { addToBasket(product.id); toast.success('Added to basket'); }} size="lg" className="w-full h-12 rounded-full">
-          Add to basket — £{product.price.toFixed(2)}
+        <Button
+          onClick={() => {
+            for (let i = 0; i < qty; i++) addToBasket(product.id);
+            toast.success('Added to basket');
+          }}
+          size="lg" className="flex-1 h-14 rounded-full text-base"
+        >
+          <ShoppingBag className="h-4 w-4 mr-2" /> Add — £{(product.price * qty).toFixed(2)}
         </Button>
       </div>
     </div>

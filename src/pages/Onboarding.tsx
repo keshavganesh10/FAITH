@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, Check } from 'lucide-react';
+import { ChevronLeft, Check, MapPin, GraduationCap, Landmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { MobileShell } from '@/components/MobileShell';
-import { FAITHS, FaithId, INTERESTS, CITIES } from '@/data/faiths';
+import { UK_CITIES, UK_UNIVERSITIES, MANDIRS, INTERESTS } from '@/data/hindu';
 import { useUser } from '@/state/user';
 import { cn } from '@/lib/utils';
 
@@ -11,27 +11,27 @@ const Onboarding = () => {
   const nav = useNavigate();
   const { setProfile } = useUser();
   const [step, setStep] = useState(0);
-  const [faith, setFaith] = useState<FaithId | null>(null);
-  const [denomination, setDenomination] = useState<string | null>(null);
   const [city, setCity] = useState<string | null>(null);
+  const [university, setUniversity] = useState<string | null>(null);
+  const [mandirId, setMandirId] = useState<string | null>(null);
   const [interests, setInterests] = useState<string[]>([]);
 
   const next = () => {
-    if (step < 3) setStep(step + 1);
+    if (step < 2) setStep(step + 1);
     else {
-      setProfile({ onboarded: true, faith, denomination, city, interests });
+      setProfile({ onboarded: true, city, university, mandirId, interests });
       nav('/app', { replace: true });
     }
   };
   const back = () => (step === 0 ? nav('/') : setStep(step - 1));
 
   const canNext =
-    (step === 0 && !!faith) ||
-    (step === 1 && !!denomination) ||
-    (step === 2 && !!city) ||
-    (step === 3 && interests.length > 0);
+    (step === 0 && !!city && !!university) ||
+    (step === 1 && !!mandirId) ||
+    (step === 2 && interests.length > 0);
 
-  const selectedFaith = FAITHS.find(f => f.id === faith);
+  const visibleMandirs = city ? MANDIRS.filter(m => m.city.toLowerCase().includes(city.toLowerCase())) : [];
+  const mandirOptions = visibleMandirs.length > 0 ? visibleMandirs : MANDIRS;
 
   return (
     <MobileShell>
@@ -40,43 +40,64 @@ const Onboarding = () => {
           <ChevronLeft className="h-5 w-5" />
         </button>
         <div className="flex-1 flex gap-1.5">
-          {[0, 1, 2, 3].map(i => (
+          {[0, 1, 2].map(i => (
             <div key={i} className={cn('h-1 flex-1 rounded-full transition-colors',
               i <= step ? 'bg-primary' : 'bg-muted')} />
           ))}
         </div>
       </header>
 
-      <div className="flex-1 overflow-y-auto px-6 pt-4 pb-6 animate-float-in" key={step}>
+      <div className="flex-1 overflow-y-auto px-6 pt-4 pb-32 animate-float-in" key={step}>
         {step === 0 && (
           <>
-            <h2 className="font-display text-3xl text-foreground">Choose your tradition</h2>
-            <p className="text-sm text-muted-foreground mt-2">We'll tailor scripture, practice and community to your path.</p>
-            <div className="grid grid-cols-2 gap-3 mt-6">
-              {FAITHS.map(f => (
-                <button key={f.id} onClick={() => { setFaith(f.id); setDenomination(null); }}
-                  className={cn('rounded-2xl border-2 bg-gradient-card p-4 text-left transition-all',
-                    faith === f.id ? 'border-primary shadow-soft' : 'border-border hover:border-primary/40')}>
-                  <div className="font-display text-3xl text-primary">{f.symbol}</div>
-                  <div className="mt-2 font-medium text-sm">{f.name}</div>
-                  <div className="text-[11px] text-muted-foreground mt-0.5">{f.scriptureName}</div>
+            <h2 className="font-display text-3xl text-foreground inline-flex items-center gap-2">
+              <MapPin className="h-6 w-6 text-accent" /> Where are you?
+            </h2>
+            <p className="text-sm text-muted-foreground mt-2">We'll tailor events, mandirs and vendors to your area.</p>
+
+            <p className="mt-6 text-[10px] tracking-widest uppercase text-muted-foreground">UK City</p>
+            <div className="grid grid-cols-2 gap-2 mt-2">
+              {UK_CITIES.map(c => (
+                <button key={c} onClick={() => { setCity(c); setMandirId(null); }}
+                  className={cn('rounded-xl border px-3 py-2.5 text-sm text-left transition-all',
+                    city === c ? 'border-primary bg-primary/5 font-medium' : 'border-border hover:border-primary/40')}>
+                  {c}
                 </button>
               ))}
             </div>
+
+            <p className="mt-6 text-[10px] tracking-widest uppercase text-muted-foreground inline-flex items-center gap-1">
+              <GraduationCap className="h-3 w-3" /> University (links to your NHSF chapter)
+            </p>
+            <select
+              value={university ?? ''}
+              onChange={e => setUniversity(e.target.value || null)}
+              className="mt-2 w-full rounded-xl border border-border bg-background px-3 py-3 text-sm"
+            >
+              <option value="">Select a university…</option>
+              {UK_UNIVERSITIES.map(u => <option key={u} value={u}>{u}</option>)}
+            </select>
           </>
         )}
 
-        {step === 1 && selectedFaith && (
+        {step === 1 && (
           <>
-            <h2 className="font-display text-3xl text-foreground">Within {selectedFaith.name}</h2>
-            <p className="text-sm text-muted-foreground mt-2">Optional — helps us refine your readings.</p>
+            <h2 className="font-display text-3xl text-foreground inline-flex items-center gap-2">
+              <Landmark className="h-6 w-6 text-accent" /> Your local mandir
+            </h2>
+            <p className="text-sm text-muted-foreground mt-2">
+              Pick the temple you visit most. You'll see its aarti times and events at the top of your feed.
+            </p>
             <div className="space-y-2 mt-6">
-              {selectedFaith.denominations.map(d => (
-                <button key={d} onClick={() => setDenomination(d)}
-                  className={cn('w-full flex items-center justify-between rounded-xl border-2 px-4 py-3.5 text-left transition-all',
-                    denomination === d ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/40')}>
-                  <span className="text-sm font-medium">{d}</span>
-                  {denomination === d && <Check className="h-4 w-4 text-primary" />}
+              {mandirOptions.map(m => (
+                <button key={m.id} onClick={() => setMandirId(m.id)}
+                  className={cn('w-full flex items-center justify-between rounded-xl border px-4 py-3 text-left transition-all',
+                    mandirId === m.id ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/40')}>
+                  <div>
+                    <p className="text-sm font-medium">{m.name}</p>
+                    <p className="text-[11px] text-muted-foreground">{m.city}{m.tradition && ` · ${m.tradition}`}</p>
+                  </div>
+                  {mandirId === m.id && <Check className="h-4 w-4 text-primary shrink-0" />}
                 </button>
               ))}
             </div>
@@ -85,32 +106,16 @@ const Onboarding = () => {
 
         {step === 2 && (
           <>
-            <h2 className="font-display text-3xl text-foreground">Where are you?</h2>
-            <p className="text-sm text-muted-foreground mt-2">For local events, places of worship and vendors.</p>
-            <div className="space-y-2 mt-6">
-              {CITIES.map(c => (
-                <button key={c} onClick={() => setCity(c)}
-                  className={cn('w-full flex items-center justify-between rounded-xl border-2 px-4 py-3 text-left transition-all',
-                    city === c ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/40')}>
-                  <span className="text-sm">{c}</span>
-                  {city === c && <Check className="h-4 w-4 text-primary" />}
-                </button>
-              ))}
-            </div>
-          </>
-        )}
-
-        {step === 3 && (
-          <>
             <h2 className="font-display text-3xl text-foreground">What draws you?</h2>
             <p className="text-sm text-muted-foreground mt-2">Pick a few — your home feed is built around these.</p>
             <div className="flex flex-wrap gap-2 mt-6">
               {INTERESTS.map(i => {
                 const on = interests.includes(i);
                 return (
-                  <button key={i} onClick={() => setInterests(s => on ? s.filter(x => x !== i) : [...s, i])}
-                    className={cn('rounded-full border px-4 py-2 text-sm transition-all',
-                      on ? 'border-primary bg-primary text-primary-foreground' : 'border-border hover:border-primary/40')}>
+                  <button key={i} onClick={() =>
+                    setInterests(s => on ? s.filter(x => x !== i) : [...s, i])}
+                    className={cn('rounded-full border px-3.5 py-2 text-xs transition-all',
+                      on ? 'border-accent bg-accent text-accent-foreground' : 'border-border hover:border-accent/50')}>
                     {i}
                   </button>
                 );
@@ -120,9 +125,9 @@ const Onboarding = () => {
         )}
       </div>
 
-      <div className="px-5 pb-6 pt-3">
-        <Button onClick={next} disabled={!canNext} size="lg" className="w-full h-16 rounded-2xl text-base font-semibold shadow-elevated">
-          {step === 3 ? 'Enter FAITH' : 'Continue'}
+      <div className="absolute inset-x-0 bottom-0 px-5 pb-6 pt-3 bg-gradient-to-t from-background via-background to-transparent">
+        <Button onClick={next} disabled={!canNext} size="lg" className="w-full h-14 rounded-full text-base shadow-soft">
+          {step < 2 ? 'Continue' : 'Enter FAITH'}
         </Button>
       </div>
     </MobileShell>

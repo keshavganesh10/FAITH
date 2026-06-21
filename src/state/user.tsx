@@ -1,18 +1,19 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import type { FaithId } from '@/data/faiths';
 import type { UserFast } from '@/data/practice';
 
 interface UserState {
   onboarded: boolean;
-  faith: FaithId | null;
-  denomination: string | null;
+  name: string | null;
   city: string | null;
+  university: string | null;
+  mandirId: string | null;
   interests: string[];
   rsvped: string[];
   bookmarks: string[];
   basket: string[];
   fasts: UserFast[];
   reminders: Record<string, boolean>;
+  readingStreak: number;
 }
 
 interface Ctx extends UserState {
@@ -27,19 +28,21 @@ interface Ctx extends UserState {
   reset: () => void;
 }
 
-const KEY = 'faith.user.v1';
+const KEY = 'faith.user.v2';
 
 const initial: UserState = {
   onboarded: false,
-  faith: null,
-  denomination: null,
+  name: null,
   city: null,
+  university: null,
+  mandirId: null,
   interests: [],
   rsvped: [],
   bookmarks: [],
   basket: [],
   fasts: [],
   reminders: {},
+  readingStreak: 4,
 };
 
 const UserContext = createContext<Ctx | null>(null);
@@ -62,16 +65,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   }));
 
   const value: Ctx = {
-    ...state,
-    setProfile,
+    ...state, setProfile,
     toggleRSVP: toggle('rsvped'),
     toggleBookmark: toggle('bookmarks'),
     addToBasket: (id) => setState(s => ({ ...s, basket: [...s.basket, id] })),
     removeFromBasket: (id) => setState(s => {
-      const i = s.basket.indexOf(id);
-      if (i < 0) return s;
-      const next = [...s.basket]; next.splice(i, 1);
-      return { ...s, basket: next };
+      const i = s.basket.indexOf(id); if (i < 0) return s;
+      const next = [...s.basket]; next.splice(i, 1); return { ...s, basket: next };
     }),
     clearBasket: () => setState(s => ({ ...s, basket: [] })),
     addFast: (f) => setState(s => ({ ...s, fasts: [...s.fasts, f] })),
