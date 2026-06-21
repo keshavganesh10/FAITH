@@ -9,7 +9,7 @@ export default {
     extend: {
       fontFamily: {
         display: ['Fraunces', '"Cormorant Garamond"', 'Georgia', 'serif'],
-        sans: ['"Nunito Sans"', '"Avenir Next"', 'Avenir', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['Inter', '"Nunito Sans"', 'system-ui', '-apple-system', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -24,14 +24,15 @@ export default {
         accent: { DEFAULT: "hsl(var(--accent))", foreground: "hsl(var(--accent-foreground))" },
         popover: { DEFAULT: "hsl(var(--popover))", foreground: "hsl(var(--popover-foreground))" },
         card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
-        sky: {
+        skyhue: {
           deep: "hsl(var(--sky-deep))",
           mid: "hsl(var(--sky-mid))",
           soft: "hsl(var(--sky-soft))",
         },
         cream: "hsl(var(--cream))",
         parchment: "hsl(var(--parchment))",
-        gold: { DEFAULT: "hsl(var(--gold))", soft: "hsl(var(--gold-soft))" },
+        saffron: { DEFAULT: "hsl(var(--saffron))", soft: "hsl(var(--saffron-soft))" },
+        kumkum: "hsl(var(--kumkum))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

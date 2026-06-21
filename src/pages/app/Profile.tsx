@@ -1,160 +1,91 @@
-import { useNavigate } from 'react-router-dom';
-import { Bell, Bookmark, CalendarPlus, ChevronRight, LogOut, MapPin, Moon, Sun } from 'lucide-react';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
+import { Link, useNavigate } from 'react-router-dom';
+import { Bookmark, CalendarHeart, ShoppingBag, Moon, Sun, LogOut, ChevronRight, GraduationCap, MapPin, Landmark } from 'lucide-react';
 import { useUser } from '@/state/user';
 import { useTheme } from '@/state/theme';
-import { FAITHS } from '@/data/faiths';
-import { DAILY_PRACTICE } from '@/data/practice';
-import { toast } from 'sonner';
-import { useState } from 'react';
+import { MANDIRS } from '@/data/hindu';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 const Profile = () => {
   const nav = useNavigate();
-  const { faith, denomination, city, interests, bookmarks, rsvped, fasts, reminders, toggleReminder, addFast, reset } = useUser();
-  const { theme, toggle: toggleTheme } = useTheme();
-  const isDark = theme === 'dark';
-  const [showFastForm, setShowFastForm] = useState(false);
-  const [fastDate, setFastDate] = useState(new Date().toISOString().slice(0,10));
-  const [fastType, setFastType] = useState('Day fast');
-  const [fastIntention, setFastIntention] = useState('');
-
-  if (!faith) return null;
-  const f = FAITHS.find(x => x.id === faith)!;
-  const practice = DAILY_PRACTICE[faith];
+  const { name, city, university, mandirId, interests, rsvped, bookmarks, basket, readingStreak, reset } = useUser();
+  const { theme, toggle } = useTheme();
+  const mandir = MANDIRS.find(m => m.id === mandirId);
 
   return (
-    <div className="pb-8">
-      <header className="bg-gradient-dawn px-6 pt-10 pb-8 text-primary-foreground">
-        <div className="flex items-center gap-4">
-          <div className="h-16 w-16 rounded-full bg-primary-foreground/15 backdrop-blur grid place-items-center font-display text-3xl">
-            {f.symbol}
+    <div className="pb-6">
+      <header className="bg-gradient-dawn px-6 pt-10 pb-12 text-primary-foreground relative overflow-hidden">
+        <div className="absolute inset-0 mandala-watermark" />
+        <div className="relative flex items-center gap-4">
+          <div className="h-16 w-16 rounded-full bg-primary-foreground/20 grid place-items-center font-display text-2xl">
+            {(name?.[0] ?? '🕉').toUpperCase()}
           </div>
           <div>
-            <p className="font-display text-2xl leading-tight">{f.name}</p>
-            {denomination && <p className="text-xs opacity-80">{denomination}</p>}
-            {city && <p className="text-[11px] opacity-80 inline-flex items-center gap-1 mt-1"><MapPin className="h-3 w-3"/>{city}</p>}
+            <h1 className="font-display text-2xl">{name ?? 'Namaste, friend'}</h1>
+            <p className="text-xs opacity-85">{city ?? 'UK'} · {readingStreak}-day streak</p>
           </div>
-        </div>
-        <div className="mt-5 flex flex-wrap gap-1.5">
-          {interests.map(i => (
-            <span key={i} className="text-[10px] uppercase tracking-wider bg-primary-foreground/15 backdrop-blur rounded-full px-2.5 py-1">{i}</span>
-          ))}
         </div>
       </header>
 
-      <div className="px-5 -mt-4 space-y-4">
+      <div className="px-5 -mt-6 space-y-3">
+        <Card className="p-4 space-y-2.5 shadow-soft">
+          <Row icon={<MapPin className="h-3.5 w-3.5" />} label="City" value={city ?? '—'} />
+          <Row icon={<GraduationCap className="h-3.5 w-3.5" />} label="University" value={university ?? '—'} />
+          <Row icon={<Landmark className="h-3.5 w-3.5" />} label="Local mandir" value={mandir?.name ?? '—'} />
+        </Card>
+
         <div className="grid grid-cols-3 gap-2">
-          <Card className="p-3 text-center">
-            <p className="font-display text-2xl text-primary">{bookmarks.length}</p>
-            <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Saved</p>
-          </Card>
-          <Card className="p-3 text-center">
-            <p className="font-display text-2xl text-primary">{rsvped.length}</p>
-            <p className="text-[10px] uppercase tracking-widest text-muted-foreground">RSVPs</p>
-          </Card>
-          <Card className="p-3 text-center">
-            <p className="font-display text-2xl text-primary">{fasts.length}</p>
-            <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Fasts</p>
-          </Card>
+          <Stat n={rsvped.length} label="RSVPs" icon={<CalendarHeart className="h-3.5 w-3.5" />} />
+          <Stat n={bookmarks.length} label="Saved" icon={<Bookmark className="h-3.5 w-3.5" />} />
+          <Stat n={basket.length} label="Basket" icon={<ShoppingBag className="h-3.5 w-3.5" />} />
         </div>
 
-        {/* Prayer reminders */}
-        <Card className="p-4">
-          <div className="flex items-center gap-2 mb-3">
-            <Bell className="h-4 w-4 text-primary" />
-            <p className="font-display text-lg">Daily reminders</p>
-          </div>
-          <ul className="space-y-2">
-            {practice.map(p => (
-              <li key={p.id} className="flex items-center justify-between py-1">
-                <div>
-                  <p className="text-sm font-medium">{p.label}</p>
-                  <p className="text-[11px] text-muted-foreground">{p.time}</p>
-                </div>
-                <Switch checked={!!reminders[p.id]} onCheckedChange={() => toggleReminder(p.id)} />
-              </li>
-            ))}
-          </ul>
-        </Card>
-
-        {/* Fasting scheduler */}
-        <Card className="p-4">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <CalendarPlus className="h-4 w-4 text-primary" />
-              <p className="font-display text-lg">Fasting schedule</p>
+        {interests.length > 0 && (
+          <Card className="p-4">
+            <p className="text-[10px] tracking-widest uppercase text-muted-foreground">Interests</p>
+            <div className="flex flex-wrap gap-1.5 mt-2">
+              {interests.map(i => (
+                <span key={i} className="text-[11px] rounded-full bg-muted px-2.5 py-1">{i}</span>
+              ))}
             </div>
-            <button onClick={() => setShowFastForm(s => !s)} className="text-xs text-primary font-medium">
-              {showFastForm ? 'Cancel' : 'Add fast'}
-            </button>
-          </div>
+          </Card>
+        )}
 
-          {showFastForm && (
-            <div className="space-y-2 mb-3 p-3 rounded-xl bg-muted/50 border border-border">
-              <input type="date" value={fastDate} onChange={e => setFastDate(e.target.value)}
-                className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm" />
-              <input value={fastType} onChange={e => setFastType(e.target.value)} placeholder="Type"
-                className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm" />
-              <input value={fastIntention} onChange={e => setFastIntention(e.target.value)} placeholder="Intention (optional)"
-                className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm" />
-              <Button size="sm" className="w-full" onClick={() => {
-                addFast({ id: crypto.randomUUID(), date: fastDate, type: fastType, intention: fastIntention });
-                setShowFastForm(false); setFastIntention('');
-                toast.success('Fast scheduled');
-              }}>Save fast</Button>
-            </div>
-          )}
-
-          {fasts.length === 0 && !showFastForm && (
-            <p className="text-xs text-muted-foreground">No fasts scheduled yet.</p>
-          )}
-          <ul className="space-y-1.5">
-            {fasts.map(fst => (
-              <li key={fst.id} className="flex items-center justify-between py-1.5 border-t border-border first:border-0">
-                <div>
-                  <p className="text-sm font-medium">{fst.type}</p>
-                  {fst.intention && <p className="text-[11px] text-muted-foreground italic">"{fst.intention}"</p>}
-                </div>
-                <p className="text-xs text-muted-foreground">{new Date(fst.date).toLocaleDateString()}</p>
-              </li>
-            ))}
-          </ul>
-        </Card>
-
-        {/* Appearance */}
-        <Card className="p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="h-9 w-9 grid place-items-center rounded-full bg-primary/10 text-primary">
-                {isDark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-              </span>
-              <div>
-                <p className="text-sm font-medium">Dark mode</p>
-                <p className="text-[11px] text-muted-foreground">{isDark ? 'On — easier on the eyes' : 'Off — bright and serene'}</p>
-              </div>
-            </div>
-            <Switch checked={isDark} onCheckedChange={toggleTheme} aria-label="Toggle dark mode" />
-          </div>
-        </Card>
-
-        {/* Saved & RSVPs */}
         <Card>
-          <button onClick={() => nav('/app/scriptures')} className="w-full flex items-center gap-3 p-4 hover:bg-muted/50">
-            <Bookmark className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium flex-1 text-left">Saved scriptures</span>
-            <span className="text-xs text-muted-foreground">{bookmarks.length}</span>
+          <button onClick={toggle} className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-muted/50 transition-colors">
+            <span className="text-sm font-medium inline-flex items-center gap-2">
+              {theme === 'dark' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+              {theme === 'dark' ? 'Dark theme' : 'Light theme'}
+            </span>
             <ChevronRight className="h-4 w-4 text-muted-foreground" />
           </button>
+          <Link to="/app/market/basket" className="flex items-center justify-between px-4 py-3.5 border-t border-border/50 hover:bg-muted/50 transition-colors">
+            <span className="text-sm font-medium">Basket ({basket.length})</span>
+            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+          </Link>
         </Card>
 
-        <Button variant="outline" className="w-full rounded-full" onClick={() => { reset(); toast('Profile reset'); nav('/'); }}>
-          <LogOut className="h-4 w-4 mr-2" /> Reset demo profile
+        <Button variant="outline" className="w-full rounded-full" onClick={() => { reset(); nav('/', { replace: true }); }}>
+          <LogOut className="h-4 w-4 mr-2" /> Reset & start over
         </Button>
       </div>
     </div>
   );
 };
+
+const Row = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
+  <div className="flex items-center justify-between text-sm">
+    <span className="inline-flex items-center gap-2 text-muted-foreground">{icon}{label}</span>
+    <span className="font-medium text-right truncate ml-3">{value}</span>
+  </div>
+);
+
+const Stat = ({ n, label, icon }: { n: number; label: string; icon: React.ReactNode }) => (
+  <Card className="p-3 text-center">
+    <div className="grid place-items-center text-accent mb-1">{icon}</div>
+    <p className="font-display text-xl leading-none">{n}</p>
+    <p className="text-[10px] text-muted-foreground mt-1 uppercase tracking-widest">{label}</p>
+  </Card>
+);
 
 export default Profile;

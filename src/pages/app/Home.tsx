@@ -1,55 +1,52 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, Flame, CalendarHeart } from 'lucide-react';
 import { useUser } from '@/state/user';
-import { FAITHS } from '@/data/faiths';
 import { VERSE_OF_DAY } from '@/data/scriptures';
-import { DAILY_PRACTICE } from '@/data/practice';
+import { OBSERVANCES, PANCHANG } from '@/data/practice';
 import { EVENTS } from '@/data/community';
-import { PRODUCTS } from '@/data/marketplace';
+import { TRACKS } from '@/data/audio';
+import { MANDIRS, HINDU_GREETINGS } from '@/data/hindu';
 import { Card } from '@/components/ui/card';
 import { NotificationsSheet } from '@/components/NotificationsSheet';
+import { usePlayer } from '@/state/player';
 
 const greeting = () => {
   const h = new Date().getHours();
   if (h < 12) return 'Good morning';
   if (h < 18) return 'Good afternoon';
-  return 'Good evening';
+  return 'Shubh sandhya';
 };
 
-const nextPractice = (faith: ReturnType<typeof useUser>['faith']) => {
-  if (!faith) return null;
-  const list = DAILY_PRACTICE[faith];
-  const now = new Date();
-  const today = list.map(p => {
-    const [h, m] = p.time.split(':').map(Number);
-    const d = new Date(); d.setHours(h, m, 0, 0);
-    return { ...p, when: d };
-  });
-  return today.find(p => p.when > now) ?? today[0];
+const daysUntil = (iso: string) => {
+  const d = new Date(iso); const now = new Date();
+  return Math.max(0, Math.ceil((d.getTime() - now.getTime()) / 86400000));
 };
 
 const Home = () => {
-  const { faith, city } = useUser();
-  if (!faith) return null;
-  const f = FAITHS.find(x => x.id === faith)!;
-  const verse = VERSE_OF_DAY[faith];
-  const practice = nextPractice(faith);
-  const event = EVENTS.find(e => e.faith === faith) ?? EVENTS[0];
-  const product = PRODUCTS.find(p => p.faith === faith && p.seasonal) ?? PRODUCTS.find(p => p.faith === faith) ?? PRODUCTS[0];
+  const { city, mandirId, name } = useUser();
+  const mandir = MANDIRS.find(m => m.id === mandirId);
+  const event = EVENTS.find(e => city && e.city.toLowerCase().includes((city || '').toLowerCase())) ?? EVENTS[0];
+  const next = OBSERVANCES[0];
+  const sloka = TRACKS[0];
+  const { play } = usePlayer();
+  const greetingLine = HINDU_GREETINGS[new Date().getDate() % HINDU_GREETINGS.length];
 
   return (
     <div className="pb-6">
-      {/* Hero greeting */}
-      <header className="bg-gradient-dawn px-6 pt-10 pb-12 text-primary-foreground relative overflow-hidden">
-        <div className="absolute inset-0 opacity-30 texture-paper" />
+      <header className="bg-gradient-dawn px-6 pt-10 pb-14 text-primary-foreground relative overflow-hidden">
+        <div className="absolute inset-0 opacity-25 texture-paper" />
+        <div className="absolute -right-12 -top-12 h-48 w-48 rounded-full border border-primary-foreground/15 mandala-watermark" />
         <div className="relative">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-xs tracking-[0.3em] uppercase opacity-80">{f.greeting}</p>
-              <h1 className="font-display text-3xl mt-1">{greeting()}</h1>
-              <p className="text-xs mt-1.5 opacity-80">
-                {new Date().toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' })}
-                {city && ` · ${city.split(',')[0]}`}
+              <p className="text-[11px] tracking-[0.3em] uppercase opacity-80">{greetingLine}</p>
+              <h1 className="font-display text-3xl mt-1">{greeting()}{name ? `, ${name}` : ''}</h1>
+              <p className="text-xs mt-2 opacity-85">
+                {new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}
+                {city && ` · ${city}`}
+              </p>
+              <p className="text-[11px] mt-1.5 opacity-80 font-display italic">
+                {PANCHANG.tithi} · {PANCHANG.nakshatra} nakshatra
               </p>
             </div>
             <NotificationsSheet />
@@ -57,61 +54,79 @@ const Home = () => {
         </div>
       </header>
 
-      <div className="px-5 -mt-6 space-y-4">
+      <div className="px-5 -mt-8 space-y-3.5">
         {/* Verse of the day */}
         <Card className="bg-gradient-card border-border/60 shadow-soft p-5 animate-float-in">
           <div className="flex items-center gap-2 text-accent">
             <Sparkles className="h-4 w-4" />
-            <span className="text-[11px] font-medium tracking-[0.2em] uppercase">Passage of the day</span>
+            <span className="text-[11px] font-medium tracking-[0.2em] uppercase">Verse of the day</span>
           </div>
-          <p className="font-display text-xl leading-snug text-foreground mt-3">"{verse.text}"</p>
+          {VERSE_OF_DAY.sanskrit && (
+            <p className="font-display text-base mt-3 text-foreground/70 leading-snug">{VERSE_OF_DAY.sanskrit}</p>
+          )}
+          <p className="font-display text-lg leading-snug text-foreground mt-2">"{VERSE_OF_DAY.text}"</p>
           <div className="mt-4 flex items-center justify-between">
-            <span className="text-xs text-muted-foreground italic">— {verse.reference}</span>
-            <Link to={`/app/scriptures`} className="text-xs font-medium text-primary inline-flex items-center gap-1">
+            <span className="text-xs text-muted-foreground italic">— {VERSE_OF_DAY.reference}</span>
+            <Link to={`/app/scriptures/${VERSE_OF_DAY.id}`} className="text-xs font-medium text-primary inline-flex items-center gap-1">
               Read more <ArrowRight className="h-3 w-3" />
             </Link>
           </div>
         </Card>
 
-        {/* Practice */}
-        {practice && (
-          <Card className="p-4 flex items-center gap-4 shadow-soft">
-            <div className="h-14 w-14 rounded-2xl bg-primary/10 grid place-items-center">
-              <span className="font-display text-2xl text-primary">{practice.time.split(':')[0]}</span>
-            </div>
-            <div className="flex-1">
-              <p className="text-[11px] tracking-widest uppercase text-muted-foreground">Next {practice.kind}</p>
-              <p className="font-display text-lg text-foreground leading-tight">{practice.label}</p>
-              <p className="text-xs text-muted-foreground">at {practice.time}</p>
-            </div>
+        {/* Upcoming observance */}
+        <Card className="p-4 flex items-center gap-4 shadow-soft">
+          <div className="h-14 w-14 rounded-2xl bg-gradient-saffron grid place-items-center text-2xl text-primary-foreground">
+            {next.emoji}
+          </div>
+          <div className="flex-1">
+            <p className="text-[11px] tracking-widest uppercase text-muted-foreground inline-flex items-center gap-1">
+              <Flame className="h-3 w-3" /> Coming up · {daysUntil(next.date)} day{daysUntil(next.date) === 1 ? '' : 's'}
+            </p>
+            <p className="font-display text-lg text-foreground leading-tight">{next.name}</p>
+            <p className="text-xs text-muted-foreground line-clamp-1">{next.description}</p>
+          </div>
+        </Card>
+
+        {/* Mandir card */}
+        {mandir && (
+          <Card className="p-4 shadow-soft">
+            <p className="text-[11px] tracking-widest uppercase text-muted-foreground">Your mandir</p>
+            <p className="font-display text-lg text-foreground mt-0.5">{mandir.name}</p>
+            <p className="text-xs text-muted-foreground">{mandir.city} · Next aarti 6:30pm</p>
           </Card>
         )}
 
-        {/* Upcoming event */}
+        {/* Local event */}
         <Link to="/app/community" className="block">
           <Card className="p-4 shadow-soft hover:shadow-elevated transition-shadow">
-            <p className="text-[11px] tracking-widest uppercase text-muted-foreground">Near you</p>
+            <p className="text-[11px] tracking-widest uppercase text-muted-foreground inline-flex items-center gap-1">
+              <CalendarHeart className="h-3 w-3" /> Near you
+            </p>
             <p className="font-display text-xl text-foreground mt-1">{event.title}</p>
-            <p className="text-xs text-muted-foreground mt-1">{event.host} · {event.distanceKm} km away</p>
+            <p className="text-xs text-muted-foreground mt-1">{event.host} · {event.distanceKm.toFixed(1)} km</p>
             <p className="text-xs text-primary mt-2">
-              {new Date(event.date).toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' })} · {new Date(event.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              {new Date(event.date).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}
+              {' · '}
+              {new Date(event.date).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
             </p>
           </Card>
         </Link>
 
-        {/* Featured product */}
-        <Link to={`/app/market/${product.id}`} className="block">
-          <Card className="p-4 flex gap-4 items-center shadow-soft hover:shadow-elevated transition-shadow">
-            <div className="h-16 w-16 rounded-2xl bg-gold-soft/40 grid place-items-center text-3xl">{product.emoji}</div>
+        {/* Sloka of the morning */}
+        <button onClick={() => play(sloka)} className="block w-full text-left">
+          <Card className="p-4 flex items-center gap-3 shadow-soft hover:shadow-elevated transition-shadow">
+            <div
+              className="h-14 w-14 rounded-2xl grid place-items-center text-xl text-primary-foreground"
+              style={{ background: `linear-gradient(135deg, hsl(${sloka.hue} 70% 55%), hsl(${(sloka.hue + 30) % 360} 65% 70%))` }}
+            >🕉</div>
             <div className="flex-1">
-              <p className="text-[11px] tracking-widest uppercase text-accent">
-                {product.seasonal ? `For ${product.seasonal}` : 'Featured'}
-              </p>
-              <p className="font-display text-lg text-foreground leading-tight">{product.name}</p>
-              <p className="text-xs text-muted-foreground">{product.vendor} · £{product.price.toFixed(2)}</p>
+              <p className="text-[11px] tracking-widest uppercase text-accent">Listen · Ad-free</p>
+              <p className="font-display text-base text-foreground leading-tight">{sloka.title}</p>
+              <p className="text-xs text-muted-foreground">{sloka.artist}</p>
             </div>
+            <span className="text-[11px] text-primary font-medium">Play →</span>
           </Card>
-        </Link>
+        </button>
       </div>
     </div>
   );

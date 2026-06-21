@@ -4,17 +4,16 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { UserProvider, useUser } from "@/state/user";
-import { AccountProvider } from "@/state/account";
 import { ThemeProvider } from "@/state/theme";
+import { PlayerProvider } from "@/state/player";
 import Welcome from "./pages/Welcome";
 import Onboarding from "./pages/Onboarding";
-import SignUp from "./pages/SignUp";
 import AppLayout from "./pages/AppLayout";
 import Home from "./pages/app/Home";
 import Scriptures from "./pages/app/Scriptures";
 import ScriptureReader from "./pages/app/ScriptureReader";
+import Listen from "./pages/app/Listen";
 import Community from "./pages/app/Community";
-import AuthorProfile from "./pages/app/AuthorProfile";
 import Market from "./pages/app/Market";
 import ProductDetail from "./pages/app/ProductDetail";
 import Basket from "./pages/app/Basket";
@@ -33,20 +32,19 @@ const App = () => (
     <ThemeProvider>
       <TooltipProvider>
         <UserProvider>
-          <AccountProvider>
+          <PlayerProvider>
             <Toaster />
             <Sonner position="top-center" />
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Welcome />} />
                 <Route path="/onboarding" element={<Onboarding />} />
-                <Route path="/signup" element={<SignUp />} />
                 <Route path="/app" element={<RequireOnboarding><AppLayout /></RequireOnboarding>}>
                   <Route index element={<Home />} />
                   <Route path="scriptures" element={<Scriptures />} />
                   <Route path="scriptures/:id" element={<ScriptureReader />} />
+                  <Route path="listen" element={<Listen />} />
                   <Route path="community" element={<Community />} />
-                  <Route path="community/u/:handle" element={<AuthorProfile />} />
                   <Route path="market" element={<Market />} />
                   <Route path="market/basket" element={<Basket />} />
                   <Route path="market/:id" element={<ProductDetail />} />
@@ -55,7 +53,7 @@ const App = () => (
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
-          </AccountProvider>
+          </PlayerProvider>
         </UserProvider>
       </TooltipProvider>
     </ThemeProvider>
