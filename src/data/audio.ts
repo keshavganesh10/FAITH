@@ -56,6 +56,9 @@ export const TRACKS: Track[] = [
   { id: 't-krishna-bhajan', title: 'Achyutam Keshavam', artist: 'Vikram Hazra', category: 'Bhajans',
     durationSec: 8 * 60 + 22, hue: 280, cover: cover('krishna,radha,vrindavan', 413),
     description: 'Soulful bhajan invoking the many names of Krishna.' },
+];
+
+
 
 
 export const AUDIO_CATEGORIES: AudioCategory[] = ['Morning Slokas', 'Bhajans', 'Meditation Mantras', 'Aarti'];
