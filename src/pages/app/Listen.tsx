@@ -23,11 +23,15 @@ const Listen = () => {
       {current && (
         <section className="px-5 mt-4">
           <Card className="overflow-hidden border-0 shadow-elevated">
-            <div className="aspect-[4/3] relative grid place-items-center text-primary-foreground"
+            <div className="aspect-[4/3] relative grid place-items-center text-primary-foreground overflow-hidden"
               style={{ background: `linear-gradient(135deg, hsl(${current.hue} 70% 50%), hsl(${(current.hue + 40) % 360} 65% 65%))` }}>
-              <div className="absolute inset-0 mandala-watermark" />
-              <span className="font-display text-8xl opacity-80">🕉</span>
+              {current.cover && current.cover.startsWith('http') && (
+                <img src={current.cover} alt={current.title} className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+              <span className="relative font-display text-8xl opacity-90 drop-shadow-lg">🕉</span>
             </div>
+
             <div className="p-4">
               <p className="text-[10px] tracking-widest uppercase text-accent">{current.category}</p>
               <p className="font-display text-xl leading-tight mt-1">{current.title}</p>
@@ -79,9 +83,14 @@ const Listen = () => {
               <Card className={cn('p-3 flex items-center gap-3 transition-all',
                 isCurrent ? 'ring-2 ring-accent shadow-soft' : 'hover:shadow-soft')}>
                 <div
-                  className="h-14 w-14 rounded-xl shrink-0 grid place-items-center text-xl text-primary-foreground"
+                  className="h-14 w-14 rounded-xl shrink-0 grid place-items-center text-xl text-primary-foreground overflow-hidden relative"
                   style={{ background: `linear-gradient(135deg, hsl(${t.hue} 70% 50%), hsl(${(t.hue + 30) % 360} 65% 65%))` }}
-                >🕉</div>
+                >
+                  {t.cover && t.cover.startsWith('http') && (
+                    <img src={t.cover} alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+                  )}
+                  <span className="relative drop-shadow">🕉</span>
+                </div>
                 <div className="min-w-0 flex-1">
                   <p className="text-[10px] tracking-widest uppercase text-muted-foreground">{t.category}</p>
                   <p className="text-sm font-medium truncate">{t.title}</p>

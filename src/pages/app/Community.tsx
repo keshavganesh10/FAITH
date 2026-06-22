@@ -73,8 +73,13 @@ const Community = () => {
                   </span>
                 </div>
                 <div className="p-4">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    {e.hostAvatar && (
+                      <img src={e.hostAvatar} alt="" className="h-7 w-7 rounded-full object-cover ring-2 ring-accent/30" loading="lazy" />
+                    )}
+                    <p className="text-[11px] text-muted-foreground font-medium">{e.host}</p>
+                  </div>
                   <p className="font-display text-lg leading-tight">{e.title}</p>
-                  <p className="text-[11px] text-muted-foreground mt-0.5">{e.host}</p>
                   <p className="text-xs text-foreground/80 mt-2 line-clamp-2">{e.description}</p>
                   <div className="mt-3 flex flex-wrap gap-3 text-[11px] text-muted-foreground">
                     <span className="inline-flex items-center gap-1"><Calendar className="h-3 w-3" />
