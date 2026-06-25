@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Play, Pause, SkipBack, SkipForward, Repeat } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward, Repeat, Loader2, Volume2 } from 'lucide-react';
 import { TRACKS, AUDIO_CATEGORIES, AudioCategory, formatTime } from '@/data/audio';
 import { usePlayer } from '@/state/player';
 import { Card } from '@/components/ui/card';
@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 
 const Listen = () => {
   const [cat, setCat] = useState<AudioCategory | 'All'>('All');
-  const { current, playing, positionSec, play, toggle, next, prev, seek } = usePlayer();
+  const { current, playing, positionSec, loading, error, play, toggle, next, prev, seek } = usePlayer();
 
   const tracks = cat === 'All' ? TRACKS : TRACKS.filter(t => t.category === cat);
 
@@ -51,11 +51,19 @@ const Listen = () => {
               <div className="mt-2 flex items-center justify-center gap-4">
                 <button onClick={prev} className="h-10 w-10 grid place-items-center rounded-full hover:bg-muted"><SkipBack className="h-4 w-4" /></button>
                 <button onClick={toggle} className="h-14 w-14 grid place-items-center rounded-full bg-primary text-primary-foreground shadow-soft hover:opacity-90">
-                  {playing ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6 ml-0.5" />}
+                  {loading ? <Loader2 className="h-6 w-6 animate-spin" /> : playing ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6 ml-0.5" />}
                 </button>
                 <button onClick={next} className="h-10 w-10 grid place-items-center rounded-full hover:bg-muted"><SkipForward className="h-4 w-4" /></button>
                 <button className="h-10 w-10 grid place-items-center rounded-full text-muted-foreground hover:bg-muted"><Repeat className="h-4 w-4" /></button>
               </div>
+              {error && <p className="text-[11px] text-destructive text-center mt-2">{error}</p>}
+              {current.audioUrl ? (
+                <p className="text-[10px] text-muted-foreground text-center mt-1 inline-flex items-center gap-1 justify-center w-full">
+                  <Volume2 className="h-2.5 w-2.5" /> Streaming from archive.org
+                </p>
+              ) : (
+                <p className="text-[10px] text-muted-foreground text-center mt-1">Preview · audio coming soon</p>
+              )}
             </div>
           </Card>
         </section>
