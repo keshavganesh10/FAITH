@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Play, Pause, SkipBack, SkipForward, Repeat } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward, Repeat, Loader2, Volume2 } from 'lucide-react';
 import { TRACKS, AUDIO_CATEGORIES, AudioCategory, formatTime } from '@/data/audio';
 import { usePlayer } from '@/state/player';
 import { Card } from '@/components/ui/card';
@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 
 const Listen = () => {
   const [cat, setCat] = useState<AudioCategory | 'All'>('All');
-  const { current, playing, positionSec, play, toggle, next, prev, seek } = usePlayer();
+  const { current, playing, positionSec, loading, error, play, toggle, next, prev, seek } = usePlayer();
 
   const tracks = cat === 'All' ? TRACKS : TRACKS.filter(t => t.category === cat);
 
