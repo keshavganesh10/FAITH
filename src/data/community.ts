@@ -23,10 +23,11 @@ export interface CommunityEvent {
 }
 
 // loremflickr serves keyword-relevant Flickr photos with deterministic seeds.
+// A single, well-chosen tag returns far more relevant results than a comma-AND list.
 const flickr = (kw: string, seed: number, w = 1080, h = 720) =>
-  `https://loremflickr.com/${w}/${h}/${kw}?lock=${seed}`;
+  `https://loremflickr.com/${w}/${h}/${encodeURIComponent(kw)}?lock=${seed}`;
 const avatar = (kw: string, seed: number) =>
-  `https://loremflickr.com/200/200/${kw}?lock=${seed}`;
+  `https://loremflickr.com/200/200/${encodeURIComponent(kw)}?lock=${seed}`;
 
 const inDays = (n: number, h = 19, m = 0) => {
   const d = new Date(); d.setDate(d.getDate() + n); d.setHours(h, m, 0, 0); return d.toISOString();
