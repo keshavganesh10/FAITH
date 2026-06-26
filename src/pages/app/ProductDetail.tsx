@@ -22,7 +22,7 @@ const ProductDetail = () => {
   );
 
   return (
-    <div className="pb-32">
+    <div className="pb-44">
       <header className="sticky top-0 bg-background/95 backdrop-blur z-20 px-3 py-3 flex items-center border-b border-border/50">
         <button onClick={() => nav(-1)} className="h-10 w-10 grid place-items-center rounded-full hover:bg-muted"><ChevronLeft className="h-5 w-5" /></button>
         <p className="flex-1 text-center text-[12px] text-muted-foreground truncate">{product.category}</p>
@@ -59,18 +59,19 @@ const ProductDetail = () => {
         )}
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 px-5 pb-6 pt-3 bg-gradient-to-t from-background via-background to-transparent flex items-center gap-3">
-        <div className="flex items-center rounded-full border border-border bg-card">
-          <button onClick={() => setQty(q => Math.max(1, q - 1))} className="h-12 w-12 grid place-items-center"><Minus className="h-4 w-4" /></button>
-          <span className="w-6 text-center font-display text-lg">{qty}</span>
-          <button onClick={() => setQty(q => q + 1)} className="h-12 w-12 grid place-items-center"><Plus className="h-4 w-4" /></button>
+      {/* Bottom action bar — sits above the floating dock (dock is ~60px tall) */}
+      <div className="absolute inset-x-0 bottom-[72px] px-4 pb-2 pt-3 bg-gradient-to-t from-background via-background/95 to-transparent flex items-center gap-2.5 z-20">
+        <div className="flex items-center rounded-full border border-border bg-card shrink-0">
+          <button onClick={() => setQty(q => Math.max(1, q - 1))} className="h-11 w-10 grid place-items-center"><Minus className="h-4 w-4" /></button>
+          <span className="w-5 text-center font-display text-base">{qty}</span>
+          <button onClick={() => setQty(q => q + 1)} className="h-11 w-10 grid place-items-center"><Plus className="h-4 w-4" /></button>
         </div>
         <Button
           onClick={() => {
             for (let i = 0; i < qty; i++) addToBasket(product.id);
             toast.success('Added to basket');
           }}
-          size="lg" className="flex-1 h-14 rounded-full text-base"
+          size="lg" className="flex-1 h-12 rounded-full text-sm"
         >
           <ShoppingBag className="h-4 w-4 mr-2" /> Add — £{(product.price * qty).toFixed(2)}
         </Button>
