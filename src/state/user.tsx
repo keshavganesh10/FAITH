@@ -14,21 +14,30 @@ interface UserState {
   fasts: UserFast[];
   reminders: Record<string, boolean>;
   readingStreak: number;
+  // Social (mock)
+  likedEvents: string[];
+  savedEvents: string[];
+  // Courses
+  completedLessons: string[];   // lesson IDs
+  xp: number;
 }
 
 interface Ctx extends UserState {
   setProfile: (p: Partial<UserState>) => void;
   toggleRSVP: (id: string) => void;
   toggleBookmark: (id: string) => void;
+  toggleLike: (id: string) => void;
+  toggleSave: (id: string) => void;
   addToBasket: (id: string) => void;
   removeFromBasket: (id: string) => void;
   clearBasket: () => void;
   addFast: (f: UserFast) => void;
   toggleReminder: (id: string) => void;
+  completeLesson: (lessonId: string, xp: number) => void;
   reset: () => void;
 }
 
-const KEY = 'faith.user.v2';
+const KEY = 'faith.user.v3';
 
 const initial: UserState = {
   onboarded: false,
@@ -43,6 +52,10 @@ const initial: UserState = {
   fasts: [],
   reminders: {},
   readingStreak: 4,
+  likedEvents: [],
+  savedEvents: [],
+  completedLessons: [],
+  xp: 0,
 };
 
 const UserContext = createContext<Ctx | null>(null);
@@ -60,7 +73,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   }, [state]);
 
   const setProfile = (p: Partial<UserState>) => setState(s => ({ ...s, ...p }));
-  const toggle = (key: 'rsvped' | 'bookmarks') => (id: string) => setState(s => ({
+  const toggle = (key: 'rsvped' | 'bookmarks' | 'likedEvents' | 'savedEvents') => (id: string) => setState(s => ({
     ...s, [key]: s[key].includes(id) ? s[key].filter(x => x !== id) : [...s[key], id],
   }));
 
@@ -68,6 +81,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     ...state, setProfile,
     toggleRSVP: toggle('rsvped'),
     toggleBookmark: toggle('bookmarks'),
+    toggleLike: toggle('likedEvents'),
+    toggleSave: toggle('savedEvents'),
     addToBasket: (id) => setState(s => ({ ...s, basket: [...s.basket, id] })),
     removeFromBasket: (id) => setState(s => {
       const i = s.basket.indexOf(id); if (i < 0) return s;
@@ -76,6 +91,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     clearBasket: () => setState(s => ({ ...s, basket: [] })),
     addFast: (f) => setState(s => ({ ...s, fasts: [...s.fasts, f] })),
     toggleReminder: (id) => setState(s => ({ ...s, reminders: { ...s.reminders, [id]: !s.reminders[id] } })),
+    completeLesson: (lessonId, xp) => setState(s => s.completedLessons.includes(lessonId)
+      ? s
+      : { ...s, completedLessons: [...s.completedLessons, lessonId], xp: s.xp + xp }),
     reset: () => setState(initial),
   };
 
