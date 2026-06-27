@@ -18,6 +18,14 @@ import Market from "./pages/app/Market";
 import ProductDetail from "./pages/app/ProductDetail";
 import Basket from "./pages/app/Basket";
 import Profile from "./pages/app/Profile";
+import Mandir from "./pages/app/Mandir";
+import Observances from "./pages/app/Observances";
+import Streak from "./pages/app/Streak";
+import CollectionDetail from "./pages/app/CollectionDetail";
+import ReadingPlan from "./pages/app/ReadingPlan";
+import Courses from "./pages/app/Courses";
+import CourseDetail from "./pages/app/CourseDetail";
+import Lesson from "./pages/app/Lesson";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
