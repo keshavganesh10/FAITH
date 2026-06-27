@@ -50,6 +50,15 @@ const App = () => (
                 <Route path="/app" element={<RequireOnboarding><AppLayout /></RequireOnboarding>}>
                   <Route index element={<Home />} />
                   <Route path="scriptures" element={<Scriptures />} />
+                  <Route path="scriptures/collection/:id" element={<CollectionDetail />} />
+                  <Route path="scriptures/plan/:id" element={<ReadingPlan />} />
+                  <Route path="scriptures/streak" element={<Streak />} />
+                  <Route path="scriptures/:id" element={<ScriptureReader />} />
+                  <Route path="courses" element={<Courses />} />
+                  <Route path="courses/:id" element={<CourseDetail />} />
+                  <Route path="courses/:courseId/lesson/:lessonId" element={<Lesson />} />
+                  <Route path="mandir" element={<Mandir />} />
+                  <Route path="observances" element={<Observances />} />
                   <Route path="scriptures/:id" element={<ScriptureReader />} />
                   <Route path="listen" element={<Listen />} />
                   <Route path="community" element={<Community />} />
