@@ -59,7 +59,6 @@ const App = () => (
                   <Route path="courses/:courseId/lesson/:lessonId" element={<Lesson />} />
                   <Route path="mandir" element={<Mandir />} />
                   <Route path="observances" element={<Observances />} />
-                  <Route path="scriptures/:id" element={<ScriptureReader />} />
                   <Route path="listen" element={<Listen />} />
                   <Route path="community" element={<Community />} />
                   <Route path="market" element={<Market />} />
