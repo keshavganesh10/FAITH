@@ -74,18 +74,20 @@ const Home = () => {
         </Card>
 
         {/* Upcoming observance */}
-        <Card className="p-4 flex items-center gap-4 shadow-soft">
-          <div className="h-14 w-14 rounded-2xl bg-gradient-saffron grid place-items-center text-2xl text-primary-foreground">
-            {next.emoji}
-          </div>
-          <div className="flex-1">
-            <p className="text-[11px] tracking-widest uppercase text-muted-foreground inline-flex items-center gap-1">
-              <Flame className="h-3 w-3" /> Coming up · {daysUntil(next.date)} day{daysUntil(next.date) === 1 ? '' : 's'}
-            </p>
-            <p className="font-display text-lg text-foreground leading-tight">{next.name}</p>
-            <p className="text-xs text-muted-foreground line-clamp-1">{next.description}</p>
-          </div>
-        </Card>
+        <Link to="/app/observances" className="block">
+          <Card className="p-4 flex items-center gap-4 shadow-soft hover:shadow-elevated transition-shadow">
+            <div className="h-14 w-14 rounded-2xl bg-gradient-saffron grid place-items-center text-2xl text-primary-foreground">
+              {next.emoji}
+            </div>
+            <div className="flex-1">
+              <p className="text-[11px] tracking-widest uppercase text-muted-foreground inline-flex items-center gap-1">
+                <Flame className="h-3 w-3" /> Coming up · {daysUntil(next.date)} day{daysUntil(next.date) === 1 ? '' : 's'}
+              </p>
+              <p className="font-display text-lg text-foreground leading-tight">{next.name}</p>
+              <p className="text-xs text-muted-foreground line-clamp-1">{next.description}</p>
+            </div>
+          </Card>
+        </Link>
 
         {/* Mandir card */}
         {mandir && (
