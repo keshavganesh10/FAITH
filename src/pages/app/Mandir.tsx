@@ -66,7 +66,6 @@ const Mandir = () => {
         <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2">Nearest mandirs</p>
         <MapView
           points={[home, ...nearby].map(m => ({ id: m.id, lat: m.lat, lng: m.lng, title: m.name, subtitle: m.city }))}
-          center={[home.lat, home.lng]}
           height={260}
         />
       </section>
