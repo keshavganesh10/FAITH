@@ -91,11 +91,13 @@ const Home = () => {
 
         {/* Mandir card */}
         {mandir && (
-          <Card className="p-4 shadow-soft">
-            <p className="text-[11px] tracking-widest uppercase text-muted-foreground">Your mandir</p>
-            <p className="font-display text-lg text-foreground mt-0.5">{mandir.name}</p>
-            <p className="text-xs text-muted-foreground">{mandir.city} · Next aarti 6:30pm</p>
-          </Card>
+          <Link to="/app/mandir" className="block">
+            <Card className="p-4 shadow-soft hover:shadow-elevated transition-shadow">
+              <p className="text-[11px] tracking-widest uppercase text-muted-foreground">Your mandir</p>
+              <p className="font-display text-lg text-foreground mt-0.5">{mandir.name}</p>
+              <p className="text-xs text-muted-foreground">{mandir.city} · Next aarti 6:30pm</p>
+            </Card>
+          </Link>
         )}
 
         {/* Local event */}
