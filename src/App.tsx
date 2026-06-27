@@ -18,6 +18,14 @@ import Market from "./pages/app/Market";
 import ProductDetail from "./pages/app/ProductDetail";
 import Basket from "./pages/app/Basket";
 import Profile from "./pages/app/Profile";
+import Mandir from "./pages/app/Mandir";
+import Observances from "./pages/app/Observances";
+import Streak from "./pages/app/Streak";
+import CollectionDetail from "./pages/app/CollectionDetail";
+import ReadingPlan from "./pages/app/ReadingPlan";
+import Courses from "./pages/app/Courses";
+import CourseDetail from "./pages/app/CourseDetail";
+import Lesson from "./pages/app/Lesson";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -42,7 +50,15 @@ const App = () => (
                 <Route path="/app" element={<RequireOnboarding><AppLayout /></RequireOnboarding>}>
                   <Route index element={<Home />} />
                   <Route path="scriptures" element={<Scriptures />} />
+                  <Route path="scriptures/collection/:id" element={<CollectionDetail />} />
+                  <Route path="scriptures/plan/:id" element={<ReadingPlan />} />
+                  <Route path="scriptures/streak" element={<Streak />} />
                   <Route path="scriptures/:id" element={<ScriptureReader />} />
+                  <Route path="courses" element={<Courses />} />
+                  <Route path="courses/:id" element={<CourseDetail />} />
+                  <Route path="courses/:courseId/lesson/:lessonId" element={<Lesson />} />
+                  <Route path="mandir" element={<Mandir />} />
+                  <Route path="observances" element={<Observances />} />
                   <Route path="listen" element={<Listen />} />
                   <Route path="community" element={<Community />} />
                   <Route path="market" element={<Market />} />
