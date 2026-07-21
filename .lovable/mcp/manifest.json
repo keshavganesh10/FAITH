@@ -1,0 +1,201 @@
+{
+  "version": 1,
+  "sdk_version": "0.24.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "faith-mcp",
+      "version": "0.1.0",
+      "title": "FAITH — UK Hindu Hub"
+    },
+    "tools": [
+      {
+        "name": "get_verse_of_the_day",
+        "title": "Get verse of the day",
+        "description": "Get today's featured Hindu scripture verse from the FAITH app, including Sanskrit, transliteration, English translation, and commentary.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_scriptures",
+        "title": "List scriptures",
+        "description": "List all Hindu scripture books available in the FAITH library (Bhagavad Gita, Upanishads, Vedas, Puranas, Yoga Sutras, Hanuman Chalisa, etc.) with each book's passage titles and references.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_passage",
+        "title": "Get scripture passage",
+        "description": "Get the full text of a Hindu scripture passage by id (e.g. `gita-2-47`, `isha-1`). Returns Sanskrit, transliteration, translation, and commentary when available. Use `list_scriptures` first to discover valid ids.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Passage id, for example `gita-2-47`."
+            }
+          },
+          "required": [
+            "id"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_upcoming_observances",
+        "title": "List upcoming observances",
+        "description": "List upcoming Hindu festivals and vratas (observances) with dates and descriptions, plus today's Panchang (tithi, nakshatra).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_mandirs",
+        "title": "List UK mandirs",
+        "description": "List Hindu mandirs (temples) across the UK that are featured in the FAITH app. Optionally filter by a city substring (e.g. `London`, `Leicester`).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "city": {
+              "description": "Optional city substring to filter mandirs.",
+              "type": "string"
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_community_events",
+        "title": "List community events",
+        "description": "List UK Hindu community events in the FAITH app (mandir aartis, NHSF socials, festivals, seva, study circles). Optionally filter by city substring or event type.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "city": {
+              "description": "Optional city substring filter.",
+              "type": "string"
+            },
+            "type": {
+              "description": "Optional event type filter.",
+              "type": "string",
+              "enum": [
+                "Mandir Aarti",
+                "NHSF",
+                "Festival",
+                "Study circle",
+                "Seva",
+                "Social"
+              ]
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_products",
+        "title": "List marketplace products",
+        "description": "List Puja and Hindu lifestyle products from UK vendors in the FAITH marketplace. Optionally filter by category (e.g. `Puja Thalis`, `Murtis`, `Incense & Oils`, `Sweets & Prasad`).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "category": {
+              "description": "Optional product category.",
+              "type": "string",
+              "enum": [
+                "Puja Thalis",
+                "Murtis",
+                "Incense & Oils",
+                "Festival Items",
+                "Books",
+                "Apparel",
+                "Sweets & Prasad",
+                "Jewellery"
+              ]
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_audio_tracks",
+        "title": "List audio tracks",
+        "description": "List ad-free devotional audio tracks (slokas, bhajans, meditation mantras, aartis) available in the FAITH Listen tab. Optionally filter by category.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "category": {
+              "description": "Optional audio category.",
+              "type": "string",
+              "enum": [
+                "Morning Slokas",
+                "Bhajans",
+                "Meditation Mantras",
+                "Aarti"
+              ]
+            }
+          }
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
