@@ -1,6 +1,6 @@
 import { defineTool } from "@lovable.dev/mcp-js";
 import { z } from "zod";
-import { MANDIRS } from "@/data/hindu";
+import { MANDIRS } from "../../../data/hindu";
 
 export default defineTool({
   name: "list_mandirs",

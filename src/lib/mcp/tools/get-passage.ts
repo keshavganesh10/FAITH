@@ -1,6 +1,6 @@
 import { defineTool } from "@lovable.dev/mcp-js";
 import { z } from "zod";
-import { findPassage } from "@/data/scriptures";
+import { findPassage } from "../../../data/scriptures";
 
 export default defineTool({
   name: "get_passage",

@@ -7,7 +7,512 @@ import { defineMcp } from "npm:@lovable.dev/mcp-js@0.24.0";
 
 // src/lib/mcp/tools/get-verse-of-the-day.ts
 import { defineTool } from "npm:@lovable.dev/mcp-js@0.24.0";
-import { VERSE_OF_DAY } from "npm:@/data/scriptures";
+
+// src/data/scriptures.ts
+var VERSE_OF_DAY = {
+  id: "gita-2-47",
+  title: "On Action Without Attachment",
+  reference: "Bhagavad Gita 2.47",
+  sanskrit: "\u0915\u0930\u094D\u092E\u0923\u094D\u092F\u0947\u0935\u093E\u0927\u093F\u0915\u093E\u0930\u0938\u094D\u0924\u0947 \u092E\u093E \u092B\u0932\u0947\u0937\u0941 \u0915\u0926\u093E\u091A\u0928\u0964 \u092E\u093E \u0915\u0930\u094D\u092E\u092B\u0932\u0939\u0947\u0924\u0941\u0930\u094D\u092D\u0942\u0930\u094D\u092E\u093E \u0924\u0947 \u0938\u0919\u094D\u0917\u094B\u093D\u0938\u094D\u0924\u094D\u0935\u0915\u0930\u094D\u092E\u0923\u093F\u0965",
+  transliteration: "karma\u1E47y-ev\u0101dhik\u0101ras te m\u0101 phale\u1E63u kad\u0101cana | m\u0101 karma-phala-hetur bh\u016Br m\u0101 te sa\u1E45go \u2019stv akarma\u1E47i",
+  text: "You have the right to perform your prescribed duty, but you are not entitled to the fruits of your actions. Never consider yourself the cause of the results, and never be attached to inaction.",
+  commentary: "Krishna teaches Arjuna the principle of nishkama karma \u2014 selfless action offered without grasping at outcome. The freedom is not in escaping work but in releasing the result.",
+  duration: 4,
+  audio: true
+};
+var gita = [
+  {
+    id: "gita-1",
+    title: "Chapter 1 \u2014 Arjuna's Dilemma",
+    reference: "Gita 1.1\u201347",
+    duration: 12,
+    audio: true,
+    sanskrit: "\u0927\u0930\u094D\u092E\u0915\u094D\u0937\u0947\u0924\u094D\u0930\u0947 \u0915\u0941\u0930\u0941\u0915\u094D\u0937\u0947\u0924\u094D\u0930\u0947 \u0938\u092E\u0935\u0947\u0924\u093E \u092F\u0941\u092F\u0941\u0924\u094D\u0938\u0935\u0903\u0964",
+    text: 'Dhritarashtra said: O Sanjaya, gathered on the holy field of Kurukshetra, eager to fight, what did my sons and the sons of Pandu do? Arjuna, seeing his teachers, uncles, brothers, sons and friends arrayed for battle, was overcome with grief, and said: "My limbs fail me, my mouth is parched, my body trembles. I will not fight, Krishna."'
+  },
+  {
+    id: "gita-2",
+    title: "Chapter 2 \u2014 The Yoga of Knowledge",
+    reference: "Gita 2.1\u201372",
+    duration: 22,
+    audio: true,
+    sanskrit: "\u0915\u094D\u0932\u0948\u092C\u094D\u092F\u0902 \u092E\u093E \u0938\u094D\u092E \u0917\u092E\u0903 \u092A\u093E\u0930\u094D\u0925 \u0928\u0948\u0924\u0924\u094D\u0924\u094D\u0935\u092F\u094D\u092F\u0941\u092A\u092A\u0926\u094D\u092F\u0924\u0947\u0964",
+    text: "The Blessed Lord said: Whence has this faint-heartedness come upon you in this hour of trial? It is unworthy of the noble, Arjuna. Cast off this petty weakness of heart and arise. The wise grieve neither for the living nor for the dead. There never was a time when I was not, nor you, nor these princes; nor shall any of us cease to be hereafter."
+  },
+  {
+    id: "gita-2-20",
+    title: "\u201CThe Self is never born and never dies\u201D",
+    reference: "Gita 2.20",
+    duration: 2,
+    audio: true,
+    sanskrit: "\u0928 \u091C\u093E\u092F\u0924\u0947 \u092E\u094D\u0930\u093F\u092F\u0924\u0947 \u0935\u093E \u0915\u0926\u093E\u091A\u093F\u0928\u094D\u0928\u093E\u092F\u0902 \u092D\u0942\u0924\u094D\u0935\u093E \u092D\u0935\u093F\u0924\u093E \u0935\u093E \u0928 \u092D\u0942\u092F\u0903\u0964",
+    text: "The Self is never born, nor does it die at any time. It has not come into being, nor will it cease to be. Unborn, eternal, permanent and primeval, the Self is not slain when the body is slain."
+  },
+  {
+    id: "gita-2-47",
+    title: "Action Without Attachment",
+    reference: "Gita 2.47",
+    duration: 4,
+    audio: true,
+    sanskrit: "\u0915\u0930\u094D\u092E\u0923\u094D\u092F\u0947\u0935\u093E\u0927\u093F\u0915\u093E\u0930\u0938\u094D\u0924\u0947 \u092E\u093E \u092B\u0932\u0947\u0937\u0941 \u0915\u0926\u093E\u091A\u0928\u0964",
+    text: "You have a right to perform your prescribed duty, but you are not entitled to the fruits of action. Never consider yourself the cause of the results, and never be attached to inaction.",
+    commentary: "The single most quoted verse of the Gita. The injunction is not against caring, but against grasping."
+  },
+  {
+    id: "gita-2-62",
+    title: "The Ladder Down From Desire",
+    reference: "Gita 2.62\u201363",
+    duration: 3,
+    text: "Brooding on objects of the senses, attachment is born; from attachment, desire; from desire, anger; from anger, delusion; from delusion, loss of memory; from loss of memory, the destruction of discrimination; and with that, the man is lost."
+  },
+  {
+    id: "gita-3",
+    title: "Chapter 3 \u2014 Karma Yoga",
+    reference: "Gita 3.1\u201343",
+    duration: 18,
+    audio: true,
+    text: "Arjuna said: If you consider knowledge superior to action, why then do you urge me to this terrible action? The Lord replied: No one can remain even for a moment without performing action. He whose senses are restrained by the mind, and who without attachment engages the organs of action in karma yoga, he is superior."
+  },
+  {
+    id: "gita-3-21",
+    title: "\u201CWhatever the great do, the world follows.\u201D",
+    reference: "Gita 3.21",
+    duration: 2,
+    sanskrit: "\u092F\u0926\u094D\u092F\u0926\u093E\u091A\u0930\u0924\u093F \u0936\u094D\u0930\u0947\u0937\u094D\u0920\u0938\u094D\u0924\u0924\u094D\u0924\u0926\u0947\u0935\u0947\u0924\u0930\u094B \u091C\u0928\u0903\u0964",
+    text: "Whatever a great man does, the same is done by others. Whatever standard he sets, the world follows."
+  },
+  {
+    id: "gita-4",
+    title: "Chapter 4 \u2014 The Yoga of Wisdom",
+    reference: "Gita 4.1\u201342",
+    duration: 16,
+    sanskrit: "\u092F\u0926\u093E \u092F\u0926\u093E \u0939\u093F \u0927\u0930\u094D\u092E\u0938\u094D\u092F \u0917\u094D\u0932\u093E\u0928\u093F\u0930\u094D\u092D\u0935\u0924\u093F \u092D\u093E\u0930\u0924\u0964",
+    text: "Whenever there is a decline of righteousness and a rise of unrighteousness, then I send forth Myself. For the protection of the good, for the destruction of the wicked, and for the establishment of dharma, I come into being age after age."
+  },
+  {
+    id: "gita-5",
+    title: "Chapter 5 \u2014 Renunciation of Action",
+    reference: "Gita 5.1\u201329",
+    duration: 12,
+    text: "The yogi who is happy within, who rejoices within, and who is illumined within, attains the absolute freedom of Brahman, and he becomes Brahman."
+  },
+  {
+    id: "gita-6",
+    title: "Chapter 6 \u2014 Meditation",
+    reference: "Gita 6.1\u201347",
+    duration: 18,
+    audio: true,
+    text: "Let the yogi try to fix his mind on the Self, sitting alone in a clean place, neither too high nor too low, holding the body, head and neck erect, motionless and steady, fixing the gaze on the tip of the nose."
+  },
+  {
+    id: "gita-6-30",
+    title: "\u201CHe who sees Me everywhere\u2026\u201D",
+    reference: "Gita 6.30",
+    duration: 2,
+    text: "He who sees Me everywhere and sees everything in Me \u2014 for him I am never lost, nor is he ever lost to Me."
+  },
+  {
+    id: "gita-7",
+    title: "Chapter 7 \u2014 Knowledge and Wisdom",
+    reference: "Gita 7.1\u201330",
+    duration: 14,
+    text: "Earth, water, fire, air, ether, mind, intellect and egoism \u2014 these are My eightfold lower nature. But know My higher nature, by which this universe is sustained."
+  },
+  {
+    id: "gita-9-22",
+    title: "I Carry What They Lack",
+    reference: "Gita 9.22",
+    duration: 3,
+    audio: true,
+    sanskrit: "\u0905\u0928\u0928\u094D\u092F\u093E\u0936\u094D\u091A\u093F\u0928\u094D\u0924\u092F\u0928\u094D\u0924\u094B \u092E\u093E\u0902 \u092F\u0947 \u091C\u0928\u093E\u0903 \u092A\u0930\u094D\u092F\u0941\u092A\u093E\u0938\u0924\u0947\u0964",
+    text: "To those who worship Me with single-minded devotion, ever steadfast, I personally carry to them what they lack and preserve what they have."
+  },
+  {
+    id: "gita-9-26",
+    title: "A Leaf, a Flower, a Fruit, Water",
+    reference: "Gita 9.26",
+    duration: 2,
+    audio: true,
+    sanskrit: "\u092A\u0924\u094D\u0930\u0902 \u092A\u0941\u0937\u094D\u092A\u0902 \u092B\u0932\u0902 \u0924\u094B\u092F\u0902 \u092F\u094B \u092E\u0947 \u092D\u0915\u094D\u0924\u094D\u092F\u093E \u092A\u094D\u0930\u092F\u091A\u094D\u091B\u0924\u093F\u0964",
+    text: "Whoever offers Me with devotion a leaf, a flower, a fruit, or even water \u2014 that I accept, offered as it is with a loving heart."
+  },
+  {
+    id: "gita-11",
+    title: "Chapter 11 \u2014 The Cosmic Vision",
+    reference: "Gita 11.1\u201355",
+    duration: 22,
+    audio: true,
+    text: "Arjuna saw the entire universe \u2014 divided in many ways but standing as One \u2014 in the body of the God of gods. Suns and moons were His eyes; His mouth, blazing fire. If a thousand suns were to rise at once in the sky, their splendour might resemble the splendour of that great Being."
+  },
+  {
+    id: "gita-12",
+    title: "Chapter 12 \u2014 The Yoga of Devotion",
+    reference: "Gita 12.1\u201320",
+    duration: 10,
+    audio: true,
+    text: "He who has no ill-will toward any being, who is friendly and compassionate, free from possessiveness and egoism, balanced in pleasure and pain, forgiving \u2014 that devotee is dear to Me."
+  },
+  {
+    id: "gita-15",
+    title: "Chapter 15 \u2014 The Eternal Tree",
+    reference: "Gita 15.1\u201320",
+    duration: 12,
+    text: "They speak of an eternal Ashvattha tree, with its roots above and branches below, whose leaves are the Vedas. He who knows this tree is the knower of the Vedas."
+  },
+  {
+    id: "gita-18",
+    title: "Chapter 18 \u2014 The Yoga of Liberation",
+    reference: "Gita 18.1\u201378",
+    duration: 28,
+    audio: true,
+    text: "Arjuna said: I wish to know the truth of renunciation and the truth of relinquishment. Krishna replied: Renunciation of action is praised by some; others say action itself is to be relinquished, but its fruits given up. Listen now to My final word."
+  },
+  {
+    id: "gita-18-66",
+    title: "The Charama Sloka",
+    reference: "Gita 18.66",
+    duration: 2,
+    audio: true,
+    sanskrit: "\u0938\u0930\u094D\u0935\u0927\u0930\u094D\u092E\u093E\u0928\u094D\u092A\u0930\u093F\u0924\u094D\u092F\u091C\u094D\u092F \u092E\u093E\u092E\u0947\u0915\u0902 \u0936\u0930\u0923\u0902 \u0935\u094D\u0930\u091C\u0964",
+    text: "Abandoning all dharmas, take refuge in Me alone. I shall liberate you from all sins. Do not grieve.",
+    commentary: "For Vaishnavas, the very heart of the Gita: surrender is itself the highest dharma."
+  }
+];
+var upanishads = [
+  {
+    id: "isha",
+    title: "Isha Upanishad",
+    reference: "18 mantras",
+    duration: 10,
+    audio: true,
+    sanskrit: "\u0908\u0936\u093E \u0935\u093E\u0938\u094D\u092F\u092E\u093F\u0926\u0902 \u0938\u0930\u094D\u0935\u0902 \u092F\u0924\u094D\u0915\u093F\u091E\u094D\u091A \u091C\u0917\u0924\u094D\u092F\u093E\u0902 \u091C\u0917\u0924\u094D\u0964",
+    text: "All this \u2014 whatever moves in this moving world \u2014 is enveloped by the Lord. Enjoy what He gives you; covet no one's wealth. Performing works in this world, one should wish to live a hundred years; only thus, and not otherwise, can one keep work from clinging to the soul."
+  },
+  {
+    id: "katha",
+    title: "Katha Upanishad \u2014 Nachiketa & Yama",
+    reference: "Katha 1\u20132",
+    duration: 16,
+    audio: true,
+    sanskrit: "\u0909\u0924\u094D\u0924\u093F\u0937\u094D\u0920\u0924 \u091C\u093E\u0917\u094D\u0930\u0924 \u092A\u094D\u0930\u093E\u092A\u094D\u092F \u0935\u0930\u093E\u0928\u094D\u0928\u093F\u092C\u094B\u0927\u0924\u0964",
+    text: "Arise! Awake! Approach the great teachers and learn. Like the sharp edge of a razor, the path is difficult to traverse, say the sages. The Self, smaller than the small, greater than the great, is hidden in the heart of every creature."
+  },
+  {
+    id: "katha-2",
+    title: "The Chariot of the Self",
+    reference: "Katha 1.3.3",
+    duration: 4,
+    text: "Know the Self as the lord of the chariot, the body as the chariot itself, the intellect as the charioteer, and the mind as the reins. The senses are the horses; the roads they travel, the objects of desire."
+  },
+  {
+    id: "mandukya",
+    title: "Mandukya Upanishad",
+    reference: "12 verses on Om",
+    duration: 8,
+    audio: true,
+    sanskrit: "\u0913\u092E\u093F\u0924\u094D\u092F\u0947\u0924\u0926\u0915\u094D\u0937\u0930\u092E\u093F\u0926\u0902 \u0938\u0930\u094D\u0935\u092E\u094D\u0964",
+    text: "Om \u2014 this syllable is all this. Its further explanation is: what was, what is, what shall be \u2014 all is Om. And whatever else is beyond the three times \u2014 that too is Om. All this is Brahman. This Self is Brahman."
+  },
+  {
+    id: "mundaka",
+    title: "Mundaka \u2014 The Two Birds",
+    reference: "Mundaka 3.1.1",
+    duration: 4,
+    audio: true,
+    sanskrit: "\u0926\u094D\u0935\u093E \u0938\u0941\u092A\u0930\u094D\u0923\u093E \u0938\u092F\u0941\u091C\u093E \u0938\u0916\u093E\u092F\u093E \u0938\u092E\u093E\u0928\u0902 \u0935\u0943\u0915\u094D\u0937\u0902 \u092A\u0930\u093F\u0937\u0938\u094D\u0935\u091C\u093E\u0924\u0947\u0964",
+    text: "Two birds, bound to one another in friendship, perch on the same tree. One eats the sweet fruit; the other looks on without eating. When the first sees the second \u2014 splendid, the Lord \u2014 its sorrow passes away."
+  },
+  {
+    id: "mundaka-3-2-3",
+    title: "\u201CThe Self is not won by study\u201D",
+    reference: "Mundaka 3.2.3",
+    duration: 2,
+    text: "This Self cannot be attained by study of the scriptures, nor by intellect, nor by much hearing. He whom the Self chooses, by him alone is It attained \u2014 to him the Self reveals its own form."
+  },
+  {
+    id: "kena",
+    title: "Kena Upanishad",
+    reference: "Kena 1.3\u20135",
+    duration: 6,
+    text: "There the eye does not go, nor speech, nor the mind. We do not know, we do not understand how one can teach this. It is other than the known, and It is beyond the unknown."
+  },
+  {
+    id: "taittiriya",
+    title: "Taittiriya \u2014 The Five Sheaths",
+    reference: "Taittiriya 2.1\u20135",
+    duration: 8,
+    text: "From food are creatures born; by food do they live; into food they pass at death. Different from this, and within it, is the self made of vital breath. Different from this, and within it, the self made of mind; then intellect; then bliss."
+  },
+  {
+    id: "chandogya",
+    title: "Chandogya \u2014 Tat Tvam Asi",
+    reference: "Chandogya 6.8.7",
+    duration: 4,
+    audio: true,
+    sanskrit: "\u0924\u0924\u094D\u0924\u094D\u0935\u092E\u0938\u093F \u0936\u094D\u0935\u0947\u0924\u0915\u0947\u0924\u094B\u0964",
+    text: "\u201CThat which is the subtle essence \u2014 in it all that exists has its self. It is the True. It is the Self. And that, Shvetaketu, thou art.\u201D One of the four Mahavakyas \u2014 the \u201Cgreat sayings\u201D \u2014 of the Vedanta."
+  },
+  {
+    id: "brihadaranyaka",
+    title: "Brihadaranyaka \u2014 Asato Ma",
+    reference: "Brihad. 1.3.28",
+    duration: 3,
+    audio: true,
+    sanskrit: "\u0905\u0938\u0924\u094B \u092E\u093E \u0938\u0926\u094D\u0917\u092E\u092F\u0964 \u0924\u092E\u0938\u094B \u092E\u093E \u091C\u094D\u092F\u094B\u0924\u093F\u0930\u094D\u0917\u092E\u092F\u0964 \u092E\u0943\u0924\u094D\u092F\u094B\u0930\u094D\u092E\u093E \u0905\u092E\u0943\u0924\u0902 \u0917\u092E\u092F\u0964",
+    text: "From the unreal lead me to the real; from darkness lead me to light; from death lead me to immortality. Om. Peace, peace, peace."
+  },
+  {
+    id: "aitareya",
+    title: "Aitareya \u2014 Prajnanam Brahma",
+    reference: "Aitareya 3.1.3",
+    duration: 2,
+    sanskrit: "\u092A\u094D\u0930\u091C\u094D\u091E\u093E\u0928\u0902 \u092C\u094D\u0930\u0939\u094D\u092E\u0964",
+    text: "Consciousness is Brahman. The Self is consciousness. This Self is Brahman. \u2014 One of the four Mahavakyas."
+  }
+];
+var vedas = [
+  {
+    id: "gayatri",
+    title: "Gayatri Mantra",
+    reference: "Rig Veda 3.62.10",
+    duration: 3,
+    audio: true,
+    sanskrit: "\u0950 \u092D\u0942\u0930\u094D\u092D\u0941\u0935\u0903 \u0938\u094D\u0935\u0903\u0964 \u0924\u0924\u094D\u0938\u0935\u093F\u0924\u0941\u0930\u094D\u0935\u0930\u0947\u0923\u094D\u092F\u0902 \u092D\u0930\u094D\u0917\u094B \u0926\u0947\u0935\u0938\u094D\u092F \u0927\u0940\u092E\u0939\u093F\u0964 \u0927\u093F\u092F\u094B \u092F\u094B \u0928\u0903 \u092A\u094D\u0930\u091A\u094B\u0926\u092F\u093E\u0924\u094D\u0965",
+    transliteration: "Om bh\u016Br bhuva\u1E25 sva\u1E25 | tat savitur vare\u1E47ya\u1E43 bhargo devasya dh\u012Bmahi | dhiyo yo na\u1E25 pracoday\u0101t",
+    text: "We meditate on the glorious splendour of the divine Sun. May He illuminate our intellect.",
+    commentary: "The supreme mantra of the Vedas. Traditionally recited at the three junctions of the day \u2014 dawn, noon, and dusk."
+  },
+  {
+    id: "nasadiya",
+    title: "Nasadiya Sukta \u2014 Hymn of Creation",
+    reference: "Rig Veda 10.129",
+    duration: 7,
+    audio: true,
+    sanskrit: "\u0928\u093E\u0938\u0926\u093E\u0938\u0940\u0928\u094D\u0928\u094B \u0938\u0926\u093E\u0938\u0940\u0924\u094D\u0924\u0926\u093E\u0928\u0940\u0902 \u0928\u093E\u0938\u0940\u0926\u094D\u0930\u091C\u094B \u0928\u094B \u0935\u094D\u092F\u094B\u092E\u093E \u092A\u0930\u094B \u092F\u0924\u094D\u0964",
+    text: "Then there was neither non-existence nor existence; there was no realm of air, no sky beyond. What stirred? Where? In whose shelter? Was there water, bottomless and deep? Who truly knows? Who shall here declare it \u2014 whence it was born, whence this creation? The gods came after this world's creation. Who knows, then, whence it has arisen?"
+  },
+  {
+    id: "purusha",
+    title: "Purusha Sukta",
+    reference: "Rig Veda 10.90",
+    duration: 9,
+    audio: true,
+    text: "The Cosmic Person has a thousand heads, a thousand eyes, a thousand feet. He pervades the earth on every side, extending ten finger-breadths beyond. All this \u2014 what has been and what shall be \u2014 is the Purusha."
+  },
+  {
+    id: "shanti",
+    title: "Saha Navavatu \u2014 Shanti Mantra",
+    reference: "Taittiriya Up. 2.2.2",
+    duration: 2,
+    audio: true,
+    sanskrit: "\u0950 \u0938\u0939 \u0928\u093E\u0935\u0935\u0924\u0941\u0964 \u0938\u0939 \u0928\u094C \u092D\u0941\u0928\u0915\u094D\u0924\u0941\u0964 \u0938\u0939 \u0935\u0940\u0930\u094D\u092F\u0902 \u0915\u0930\u0935\u093E\u0935\u0939\u0948\u0964 \u0924\u0947\u091C\u0938\u094D\u0935\u093F\u0928\u093E\u0935\u0927\u0940\u0924\u092E\u0938\u094D\u0924\u0941 \u092E\u093E \u0935\u093F\u0926\u094D\u0935\u093F\u0937\u093E\u0935\u0939\u0948\u0965",
+    text: "May He protect us both, may He nourish us both, may we work together with great energy; may our study be vigorous and effective; may we not hate one another. Om peace, peace, peace."
+  },
+  {
+    id: "sarvesham",
+    title: "Sarveshaam Svastir Bhavatu",
+    reference: "Brihadaranyaka Up.",
+    duration: 2,
+    audio: true,
+    sanskrit: "\u0938\u0930\u094D\u0935\u0947\u0937\u093E\u0902 \u0938\u094D\u0935\u0938\u094D\u0924\u093F\u0930\u094D\u092D\u0935\u0924\u0941\u0964 \u0938\u0930\u094D\u0935\u0947\u0937\u093E\u0902 \u0936\u093E\u0928\u094D\u0924\u093F\u0930\u094D\u092D\u0935\u0924\u0941\u0964 \u0938\u0930\u094D\u0935\u0947\u0937\u093E\u0902 \u092A\u0942\u0930\u094D\u0923\u0902 \u092D\u0935\u0924\u0941\u0964 \u0938\u0930\u094D\u0935\u0947\u0937\u093E\u0902 \u092E\u0919\u094D\u0917\u0932\u0902 \u092D\u0935\u0924\u0941\u0964",
+    text: "May all be well; may all be at peace; may all be whole; may all be auspicious."
+  },
+  {
+    id: "mrityunjaya",
+    title: "Maha Mrityunjaya Mantra",
+    reference: "Rig Veda 7.59.12",
+    duration: 3,
+    audio: true,
+    sanskrit: "\u0950 \u0924\u094D\u0930\u094D\u092F\u092E\u094D\u092C\u0915\u0902 \u092F\u091C\u093E\u092E\u0939\u0947 \u0938\u0941\u0917\u0928\u094D\u0927\u093F\u0902 \u092A\u0941\u0937\u094D\u091F\u093F\u0935\u0930\u094D\u0927\u0928\u092E\u094D\u0964 \u0909\u0930\u094D\u0935\u093E\u0930\u0941\u0915\u092E\u093F\u0935 \u092C\u0928\u094D\u0927\u0928\u093E\u0928\u094D\u092E\u0943\u0924\u094D\u092F\u094B\u0930\u094D\u092E\u0941\u0915\u094D\u0937\u0940\u092F \u092E\u093E\u093D\u092E\u0943\u0924\u093E\u0924\u094D\u0965",
+    text: "We worship the three-eyed One, fragrant, who nourishes all. As the cucumber is released from its stalk, may He release us from death \u2014 but not from immortality."
+  },
+  {
+    id: "sri-sukta",
+    title: "Sri Sukta \u2014 Hymn to Lakshmi",
+    reference: "Rig Veda Khila",
+    duration: 6,
+    text: "I invoke the resplendent Lakshmi, golden, fawn-coloured, garlanded with gold and silver, radiant as the moon. May she \u2014 the bestower of riches, lotus-eyed and benign \u2014 come unto me."
+  },
+  {
+    id: "rudra",
+    title: "Sri Rudram (extract)",
+    reference: "Krishna Yajur Veda",
+    duration: 11,
+    audio: true,
+    text: "Salutations to Rudra in your fierce form, salutations to your arrow; salutations to your bow. Salutations to the lord of thieves, lord of beasts, lord of the forests; salutations to the green, the dark, the auspicious."
+  }
+];
+var puranas = [
+  {
+    id: "ramayana-bal",
+    title: "Ramayana \u2014 Bala Kanda",
+    reference: "Childhood of Rama",
+    duration: 20,
+    text: "In the kingdom of Kosala, on the banks of the Sarayu, stood the city of Ayodhya, ruled by the righteous king Dasharatha. Childless, he performed the great Putrakameshti yajna; from its sacred fire arose a being bearing a vessel of celestial payasam. So were born four sons \u2014 Rama, Bharata, Lakshmana, Shatrughna."
+  },
+  {
+    id: "ramayana-ayodhya",
+    title: "Ramayana \u2014 The Exile",
+    reference: "Ayodhya Kanda",
+    duration: 18,
+    text: "On the eve of his coronation, Rama was sent to the forest for fourteen years, that his stepmother Kaikeyi might place her son Bharata on the throne. Without a tremor he laid aside his royal robes, and Sita and Lakshmana followed him into the wilderness."
+  },
+  {
+    id: "sundarakanda",
+    title: "Sundarakanda \u2014 Hanuman's Leap",
+    reference: "Ramayana 5.1",
+    duration: 14,
+    audio: true,
+    text: "Hanuman, recalling the strength he had forgotten, expanded to a mountain's size. He pressed his foot on Mount Mahendra, and leapt across the hundred-yojana ocean to Lanka, that he might find Sita and bring word to Rama."
+  },
+  {
+    id: "mahabharata-udyoga",
+    title: "Mahabharata \u2014 Krishna's Peace Mission",
+    reference: "Udyoga Parva",
+    duration: 24,
+    text: "Krishna travelled to Hastinapura as envoy of the Pandavas, asking only five villages \u2014 and was refused. When Duryodhana sought to bind him, Krishna revealed his Vishvarupa, the universal form, and the council shielded its eyes."
+  },
+  {
+    id: "bhagavata-10",
+    title: "Bhagavata Purana \u2014 Krishna in Vrindavan",
+    reference: "Canto 10",
+    duration: 18,
+    audio: true,
+    text: "In the forests of Vrindavan, the cowherd boys ran with the calves; Krishna played the flute, and the world stood still. Gopis left their homes by night to dance the Rasa-lila on the banks of the Yamuna; for one whose heart is taken by Krishna, no other tie remains."
+  },
+  {
+    id: "bhagavata-prahlada",
+    title: "Prahlada and Narasimha",
+    reference: "Bhagavata 7.8",
+    duration: 12,
+    text: "Hiranyakashipu, who could not be slain by man or beast, by day or night, indoors or out, struck the pillar in fury \u2014 and out of it sprang Narasimha, neither man nor lion, at twilight, on the threshold, and laid the demon across His lap."
+  },
+  {
+    id: "ganesha-purana",
+    title: "Why Ganesha Has an Elephant's Head",
+    reference: "Shiva Purana",
+    duration: 8,
+    text: "Parvati fashioned a boy from the turmeric of her body, and set him to guard her door. When Shiva returned, the boy refused him entry; in anger Shiva severed his head. Seeing Parvati's grief, Shiva placed upon him the head of the first being he met \u2014 an elephant \u2014 and called him Ganesha, lord of beginnings."
+  }
+];
+var yogasutras = [
+  {
+    id: "ys-1-1",
+    title: "\u201CNow, the teaching of yoga.\u201D",
+    reference: "Yoga Sutras 1.1",
+    duration: 1,
+    audio: true,
+    sanskrit: "\u0905\u0925 \u092F\u094B\u0917\u093E\u0928\u0941\u0936\u093E\u0938\u0928\u092E\u094D\u0964",
+    text: "Now, the discipline of yoga is taught."
+  },
+  {
+    id: "ys-1-2",
+    title: "The Definition of Yoga",
+    reference: "Yoga Sutras 1.2",
+    duration: 2,
+    audio: true,
+    sanskrit: "\u092F\u094B\u0917\u0936\u094D\u091A\u093F\u0924\u094D\u0924\u0935\u0943\u0924\u094D\u0924\u093F\u0928\u093F\u0930\u094B\u0927\u0903\u0964",
+    text: "Yoga is the stilling of the modifications of the mind.",
+    commentary: "Patanjali's most famous sutra. When the rippling stops, the depth becomes visible."
+  },
+  {
+    id: "ys-1-12",
+    title: "Practice and Non-attachment",
+    reference: "Yoga Sutras 1.12",
+    duration: 2,
+    sanskrit: "\u0905\u092D\u094D\u092F\u093E\u0938\u0935\u0948\u0930\u093E\u0917\u094D\u092F\u093E\u092D\u094D\u092F\u093E\u0902 \u0924\u0928\u094D\u0928\u093F\u0930\u094B\u0927\u0903\u0964",
+    text: "Their stilling is by practice (abhyasa) and non-attachment (vairagya)."
+  },
+  {
+    id: "ys-2-29",
+    title: "The Eight Limbs",
+    reference: "Yoga Sutras 2.29",
+    duration: 3,
+    audio: true,
+    sanskrit: "\u092F\u092E \u0928\u093F\u092F\u092E \u0906\u0938\u0928 \u092A\u094D\u0930\u093E\u0923\u093E\u092F\u093E\u092E \u092A\u094D\u0930\u0924\u094D\u092F\u093E\u0939\u093E\u0930 \u0927\u093E\u0930\u0923\u093E \u0927\u094D\u092F\u093E\u0928 \u0938\u092E\u093E\u0927\u092F\u094B\u093D\u0937\u094D\u091F\u093E\u0935\u0919\u094D\u0917\u093E\u0928\u093F\u0964",
+    text: "The eight limbs of yoga are: yama (restraints), niyama (observances), asana (posture), pranayama (breath), pratyahara (withdrawal), dharana (concentration), dhyana (meditation), samadhi (absorption)."
+  },
+  {
+    id: "ys-2-46",
+    title: "On Asana",
+    reference: "Yoga Sutras 2.46",
+    duration: 1,
+    sanskrit: "\u0938\u094D\u0925\u093F\u0930\u0938\u0941\u0916\u092E\u093E\u0938\u0928\u092E\u094D\u0964",
+    text: "Posture should be steady and comfortable."
+  }
+];
+var chalisa = [
+  {
+    id: "hc-opening",
+    title: "Doha \u2014 Opening",
+    reference: "Hanuman Chalisa",
+    duration: 2,
+    audio: true,
+    sanskrit: "\u0936\u094D\u0930\u0940\u0917\u0941\u0930\u0941 \u091A\u0930\u0928 \u0938\u0930\u094B\u091C \u0930\u091C \u0928\u093F\u091C \u092E\u0928\u0941 \u092E\u0941\u0915\u0941\u0930\u0941 \u0938\u0941\u0927\u093E\u0930\u093F\u0964",
+    text: "Cleansing the mirror of my mind with the dust of my Guru's lotus feet, I describe the unblemished glory of Rama, the bestower of the four fruits of life."
+  },
+  {
+    id: "hc-1",
+    title: "Verse 1 \u2014 Jai Hanuman",
+    reference: "Hanuman Chalisa 1",
+    duration: 1,
+    audio: true,
+    sanskrit: "\u091C\u092F \u0939\u0928\u0941\u092E\u093E\u0928 \u091C\u094D\u091E\u093E\u0928 \u0917\u0941\u0928 \u0938\u093E\u0917\u0930\u0964 \u091C\u092F \u0915\u092A\u0940\u0938 \u0924\u093F\u0939\u0941\u0901 \u0932\u094B\u0915 \u0909\u091C\u093E\u0917\u0930\u0965",
+    text: "Victory to Hanuman, ocean of wisdom and virtue; victory to the lord of the monkeys, illuminator of the three worlds."
+  },
+  {
+    id: "hc-7",
+    title: "Verse 7 \u2014 The Devoted Messenger",
+    reference: "Hanuman Chalisa 7",
+    duration: 1,
+    text: "You found Sita and burned Lanka; without your aid, Rama would not have crossed the sea."
+  },
+  {
+    id: "hc-closing",
+    title: "Closing Doha",
+    reference: "Hanuman Chalisa",
+    duration: 1,
+    audio: true,
+    sanskrit: "\u092A\u0935\u0928\u0924\u0928\u092F \u0938\u0902\u0915\u091F \u0939\u0930\u0928 \u092E\u0902\u0917\u0932 \u092E\u0942\u0930\u0924\u093F \u0930\u0942\u092A\u0964",
+    text: "O son of the wind, remover of distress, embodiment of auspiciousness \u2014 dwell with Rama, Lakshmana and Sita in my heart."
+  }
+];
+var sahasranama = [
+  {
+    id: "vs-dhyanam",
+    title: "Dhyanam \u2014 Meditation Verse",
+    reference: "Vishnu Sahasranama",
+    duration: 3,
+    audio: true,
+    sanskrit: "\u0936\u093E\u0928\u094D\u0924\u093E\u0915\u093E\u0930\u0902 \u092D\u0941\u091C\u0917\u0936\u092F\u0928\u0902 \u092A\u0926\u094D\u092E\u0928\u093E\u092D\u0902 \u0938\u0941\u0930\u0947\u0936\u092E\u094D\u0964",
+    text: "I meditate upon Vishnu, of peaceful form, reclining on the serpent of eternity, the lotus-naveled lord of gods, the supporter of the universe, of the colour of the cloud, of beautiful limbs, beloved of Lakshmi."
+  },
+  {
+    id: "vs-phala",
+    title: "The Fruit of Recitation",
+    reference: "Phala Sruti",
+    duration: 2,
+    text: "Whoever recites these thousand names of Vishnu daily, with devotion, attains lasting fame, prosperity, freedom from sorrow, and finally union with Him."
+  }
+];
+var SCRIPTURES = [
+  { id: "gita", title: "Bhagavad Gita", subtitle: `${gita.length} passages \xB7 The Song of the Lord`, passages: gita },
+  { id: "upanishads", title: "Principal Upanishads", subtitle: `${upanishads.length} dialogues \xB7 the end of the Vedas`, passages: upanishads },
+  { id: "vedas", title: "The Vedas", subtitle: `${vedas.length} hymns \xB7 Rig, Sama, Yajur, Atharva`, passages: vedas },
+  { id: "puranas", title: "Puranas & Itihasa", subtitle: `${puranas.length} stories \xB7 dharma in narrative`, passages: puranas },
+  { id: "yogasutras", title: "Yoga Sutras of Patanjali", subtitle: `${yogasutras.length} aphorisms \xB7 the science of the mind`, passages: yogasutras },
+  { id: "chalisa", title: "Hanuman Chalisa", subtitle: "40 verses by Tulsidas", passages: chalisa },
+  { id: "sahasranama", title: "Vishnu Sahasranama", subtitle: "The thousand names \u2014 selections", passages: sahasranama }
+];
+var findPassage = (id) => {
+  for (const b of SCRIPTURES) {
+    const p = b.passages.find((x) => x.id === id);
+    if (p) return p;
+  }
+  return void 0;
+};
+
+// src/lib/mcp/tools/get-verse-of-the-day.ts
 var get_verse_of_the_day_default = defineTool({
   name: "get_verse_of_the_day",
   title: "Get verse of the day",
@@ -22,7 +527,6 @@ var get_verse_of_the_day_default = defineTool({
 
 // src/lib/mcp/tools/list-scriptures.ts
 import { defineTool as defineTool2 } from "npm:@lovable.dev/mcp-js@0.24.0";
-import { SCRIPTURES } from "npm:@/data/scriptures";
 var list_scriptures_default = defineTool2({
   name: "list_scriptures",
   title: "List scriptures",
@@ -47,7 +551,6 @@ var list_scriptures_default = defineTool2({
 // src/lib/mcp/tools/get-passage.ts
 import { defineTool as defineTool3 } from "npm:@lovable.dev/mcp-js@0.24.0";
 import { z } from "npm:zod@^4.4.3";
-import { findPassage } from "npm:@/data/scriptures";
 var get_passage_default = defineTool3({
   name: "get_passage",
   title: "Get scripture passage",
@@ -68,7 +571,57 @@ var get_passage_default = defineTool3({
 
 // src/lib/mcp/tools/list-observances.ts
 import { defineTool as defineTool4 } from "npm:@lovable.dev/mcp-js@0.24.0";
-import { OBSERVANCES, PANCHANG } from "npm:@/data/practice";
+
+// src/data/practice.ts
+var inDays = (n, h = 6) => {
+  const d = /* @__PURE__ */ new Date();
+  d.setDate(d.getDate() + n);
+  d.setHours(h, 0, 0, 0);
+  return d.toISOString();
+};
+var OBSERVANCES = [
+  {
+    id: "o-ekadashi",
+    name: "Papankusha Ekadashi",
+    kind: "Ekadashi",
+    date: inDays(3),
+    description: "A fast day for spiritual purification. Devotees observe nirjala or phalahari vrat.",
+    emoji: "\u{1F319}"
+  },
+  {
+    id: "o-navratri",
+    name: "Sharad Navratri begins",
+    kind: "Festival",
+    date: inDays(11),
+    description: "Nine nights of devotion to the Divine Mother. Garba, fasting and aarti.",
+    emoji: "\u{1FA94}"
+  },
+  {
+    id: "o-purnima",
+    name: "Sharad Purnima",
+    kind: "Purnima",
+    date: inDays(20),
+    description: "The full moon of the harvest season. Kheer is offered to the moon overnight.",
+    emoji: "\u{1F315}"
+  },
+  {
+    id: "o-diwali",
+    name: "Diwali \u2014 Lakshmi Puja",
+    kind: "Festival",
+    date: inDays(31),
+    description: "The festival of lights, honouring Goddess Lakshmi and the return of Sri Rama.",
+    emoji: "\u{1F386}"
+  }
+];
+var PANCHANG = {
+  tithi: "Shukla Saptami",
+  paksha: "Shukla",
+  nakshatra: "Anuradha",
+  yoga: "Saubhagya",
+  samvat: "Vikram Samvat 2082"
+};
+
+// src/lib/mcp/tools/list-observances.ts
 var list_observances_default = defineTool4({
   name: "list_upcoming_observances",
   title: "List upcoming observances",
@@ -84,7 +637,22 @@ var list_observances_default = defineTool4({
 // src/lib/mcp/tools/list-mandirs.ts
 import { defineTool as defineTool5 } from "npm:@lovable.dev/mcp-js@0.24.0";
 import { z as z2 } from "npm:zod@^4.4.3";
-import { MANDIRS } from "npm:@/data/hindu";
+
+// src/data/hindu.ts
+var MANDIRS = [
+  { id: "m-neasden", name: "BAPS Shri Swaminarayan Mandir", city: "London (Neasden)", tradition: "Swaminarayan", lat: 51.5547, lng: -0.2647 },
+  { id: "m-shrisana", name: "Shri Sanatan Hindu Mandir", city: "London (Wembley)", tradition: "Sanatan", lat: 51.5582, lng: -0.2964 },
+  { id: "m-radhakr", name: "Bhaktivedanta Manor", city: "Watford", tradition: "ISKCON", lat: 51.6736, lng: -0.4128 },
+  { id: "m-leicester", name: "Shree Sanatan Mandir", city: "Leicester", tradition: "Sanatan", lat: 52.6443, lng: -1.1242 },
+  { id: "m-bham", name: "Shri Venkateswara (Balaji) Temple", city: "Birmingham (Tividale)", tradition: "Vaishnava", lat: 52.5008, lng: -2.053 },
+  { id: "m-mcr", name: "Shree Geeta Bhawan Hindu Temple", city: "Manchester", tradition: "Sanatan", lat: 53.4422, lng: -2.228 },
+  { id: "m-leeds", name: "Shree Hindu Mandir", city: "Leeds", tradition: "Sanatan", lat: 53.8085, lng: -1.5602 },
+  { id: "m-nottm", name: "Shree Geeta Bhawan", city: "Nottingham", tradition: "Sanatan", lat: 52.9586, lng: -1.1668 },
+  { id: "m-cardiff", name: "Shree Swaminarayan Mandir", city: "Cardiff", tradition: "Swaminarayan", lat: 51.4816, lng: -3.1791 },
+  { id: "m-glasgow", name: "Hindu Mandir Glasgow", city: "Glasgow", tradition: "Sanatan", lat: 55.8642, lng: -4.2518 }
+];
+
+// src/lib/mcp/tools/list-mandirs.ts
 var list_mandirs_default = defineTool5({
   name: "list_mandirs",
   title: "List UK mandirs",
@@ -104,7 +672,408 @@ var list_mandirs_default = defineTool5({
 // src/lib/mcp/tools/list-events.ts
 import { defineTool as defineTool6 } from "npm:@lovable.dev/mcp-js@0.24.0";
 import { z as z3 } from "npm:zod@^4.4.3";
-import { EVENTS, EVENT_TYPES } from "npm:@/data/community";
+
+// src/data/community.ts
+var flickr = (kw, seed, w = 1080, h = 1080) => `https://loremflickr.com/${w}/${h}/${encodeURIComponent(kw)}?lock=${seed}`;
+var avatar = (kw, seed) => `https://loremflickr.com/200/200/${encodeURIComponent(kw)}?lock=${seed}`;
+var inDays2 = (n, h = 19, m = 0) => {
+  const d = /* @__PURE__ */ new Date();
+  d.setDate(d.getDate() + n);
+  d.setHours(h, m, 0, 0);
+  return d.toISOString();
+};
+var c = (id, author, ag, txt, seed) => ({
+  id,
+  author,
+  ago: ag,
+  text: txt,
+  avatar: avatar("portrait,indian", seed)
+});
+var EVENTS = [
+  {
+    id: "e-nhsf-mcr-garba",
+    title: "Navratri Garba Night",
+    type: "NHSF",
+    host: "NHSF Manchester",
+    hostHandle: "@nhsf_manchester",
+    hostAvatar: avatar("logo,indian", 101),
+    venue: "Whitworth Hall, University of Manchester",
+    city: "Manchester",
+    date: inDays2(2, 19, 30),
+    distanceKm: 1.2,
+    free: false,
+    price: 8,
+    attendees: 184,
+    description: "Live dhol, garba and dandiya raas \u2014 open to all students. Traditional dress encouraged. Aarti at 8pm.",
+    lat: 53.467,
+    lng: -2.233,
+    emoji: "\u{1F483}",
+    likes: 412,
+    images: [flickr("garba", 11), flickr("dandiya", 211), flickr("chaniyacholi", 311)],
+    comments: [
+      c("c1", "priya_patel", "2h", "Just bought my ticket! Anyone driving from Fallowfield?", 1001),
+      c("c2", "nhsf_warwick", "4h", "Wish we could come down \u{1F64F} have a great one", 1002),
+      c("c3", "rahul.s", "6h", "Will there be food stalls?", 1003)
+    ]
+  },
+  {
+    id: "e-neasden-aarti",
+    title: "Sandhya Aarti",
+    type: "Mandir Aarti",
+    host: "BAPS Shri Swaminarayan Mandir",
+    hostHandle: "@bapsneasden",
+    hostAvatar: avatar("temple,hindu", 102),
+    venue: "Neasden Temple, London",
+    city: "London",
+    date: inDays2(0, 18, 30),
+    distanceKm: 4.7,
+    free: true,
+    attendees: 320,
+    description: "Daily evening aarti followed by prasad. All welcome, including first-time visitors. \u{1FA94}",
+    lat: 51.5547,
+    lng: -0.2647,
+    emoji: "\u{1FA94}",
+    likes: 1284,
+    images: [flickr("aarti", 12), flickr("mandir", 212), flickr("diya", 312)],
+    comments: [
+      c("c1", "meera_uk", "1h", "My weekly anchor \u{1F64F}", 1004),
+      c("c2", "aarav.g", "3h", "First time visitor today, was beautiful", 1005)
+    ]
+  },
+  {
+    id: "e-gita-circle",
+    title: "Bhagavad Gita Study Circle \u2014 Chapter 12",
+    type: "Study circle",
+    host: "NHSF UCL",
+    hostHandle: "@nhsf_ucl",
+    hostAvatar: avatar("book,gita", 103),
+    venue: "UCL Bloomsbury Campus, Room G14",
+    city: "London",
+    date: inDays2(3, 18, 0),
+    distanceKm: 2.1,
+    free: true,
+    attendees: 32,
+    description: "Weekly student-led discussion on the Bhakti Yoga chapter. Bring your own translation or use ours.",
+    lat: 51.5246,
+    lng: -0.134,
+    emoji: "\u{1F4D6}",
+    likes: 87,
+    images: [flickr("bhagavadgita", 13), flickr("sanskrit", 213)],
+    comments: [c("c1", "shreya_v", "2d", "Loved last week's session \u2014 Krishna's 36 qualities of a devotee \u{1F90D}", 1006)]
+  },
+  {
+    id: "e-diwali-ball",
+    title: "NHSF National Diwali Ball",
+    type: "Festival",
+    host: "NHSF National",
+    hostHandle: "@nhsfuk",
+    hostAvatar: avatar("diwali,lights", 104),
+    venue: "The Brewery, London",
+    city: "London",
+    date: inDays2(14, 19, 0),
+    distanceKm: 5.8,
+    free: false,
+    price: 65,
+    attendees: 420,
+    description: "The flagship NHSF Diwali black-tie event. Three-course Indian fine dining, performances, after-party. \u{1FA85}",
+    lat: 51.5215,
+    lng: -0.0961,
+    emoji: "\u{1FA85}",
+    likes: 2103,
+    images: [flickr("diwali", 14), flickr("lehenga", 214), flickr("rangoli", 314), flickr("fireworks", 414)],
+    comments: [
+      c("c1", "tanvi_k", "5h", "Tickets going FAST \u{1F525}", 1007),
+      c("c2", "arjun.p", "6h", "Hosting a table from Bristol \u2014 DM if joining!", 1008),
+      c("c3", "nhsf_kcl", "8h", "KCL squad ready \u{1FA94}", 1009)
+    ]
+  },
+  {
+    id: "e-leics-langar",
+    title: "Annakut Seva \u2014 Food Distribution",
+    type: "Seva",
+    host: "Shree Sanatan Mandir Leicester",
+    hostHandle: "@sanatan_leics",
+    hostAvatar: avatar("temple,india", 105),
+    venue: "Sanatan Mandir, Weymouth Street",
+    city: "Leicester",
+    date: inDays2(5, 11, 0),
+    distanceKm: 0.8,
+    free: true,
+    attendees: 60,
+    description: "Help prepare and distribute prasad to the local community. No experience needed \u2014 just willing hands.",
+    lat: 52.6443,
+    lng: -1.1242,
+    emoji: "\u{1F35B}",
+    likes: 156,
+    images: [flickr("thali", 15), flickr("seva", 215), flickr("langar", 315)],
+    comments: [c("c1", "kavya_l", "1d", "Brought my whole flat last time, such a beautiful day \u{1F49B}", 1010)]
+  },
+  {
+    id: "e-bham-cricket",
+    title: "NHSF Inter-Uni Cricket Tournament",
+    type: "NHSF",
+    host: "NHSF Birmingham",
+    hostHandle: "@nhsf_bham",
+    hostAvatar: avatar("cricket,sport", 106),
+    venue: "Edgbaston Indoor Cricket Centre",
+    city: "Birmingham",
+    date: inDays2(7, 10, 0),
+    distanceKm: 3.4,
+    free: false,
+    price: 5,
+    attendees: 96,
+    description: "12 Hindu societies, one trophy. Sign up as a team or join one on the day. \u{1F3CF}",
+    lat: 52.4555,
+    lng: -1.9047,
+    emoji: "\u{1F3CF}",
+    likes: 234,
+    images: [flickr("cricket", 16), flickr("edgbaston", 216)],
+    comments: [c("c1", "dev_b", "12h", "Defending champs \u{1F3C6} NHSF Leicester see you there", 1011)]
+  },
+  {
+    id: "e-bhajan-night",
+    title: "Bhajan & Kirtan Night",
+    type: "Social",
+    host: "Bhaktivedanta Manor",
+    hostHandle: "@iskcon_manor",
+    hostAvatar: avatar("krishna,iskcon", 107),
+    venue: "Bhaktivedanta Manor, Watford",
+    city: "Watford",
+    date: inDays2(4, 19, 30),
+    distanceKm: 18,
+    free: true,
+    attendees: 145,
+    description: "Acoustic kirtan led by visiting devotees. Vegetarian feast served afterward. \u{1F3B5}",
+    lat: 51.6736,
+    lng: -0.4128,
+    emoji: "\u{1F3B5}",
+    likes: 489,
+    images: [flickr("harmonium", 17), flickr("kirtan", 217), flickr("krishna", 317)],
+    comments: [c("c1", "radhe_r", "3h", "Goosebumps every single time \u{1F64F}", 1012)]
+  },
+  {
+    id: "e-warwick-holi",
+    title: "Holi on the Piazza",
+    type: "Festival",
+    host: "NHSF Warwick",
+    hostHandle: "@nhsf_warwick",
+    hostAvatar: avatar("holi,colors", 108),
+    venue: "University of Warwick Piazza",
+    city: "Coventry",
+    date: inDays2(21, 12, 0),
+    distanceKm: 22.5,
+    free: true,
+    attendees: 510,
+    description: "Free colours, free bhang lassi, free food. Wear white \u2014 leave colourful. \u{1F308}",
+    lat: 52.3793,
+    lng: -1.5615,
+    emoji: "\u{1F308}",
+    likes: 1872,
+    images: [flickr("holi", 18), flickr("colors", 218), flickr("rainbow", 318), flickr("festival", 418)],
+    comments: [
+      c("c1", "maya_w", "1d", "Last year was UNREAL \u2014 bringing 20 friends this time", 1013),
+      c("c2", "shivam.t", "2d", "Are non-students welcome?", 1014)
+    ]
+  },
+  {
+    id: "e-leeds-yoga",
+    title: "Sunrise Yoga & Surya Namaskar",
+    type: "Social",
+    host: "NHSF Leeds",
+    hostHandle: "@nhsf_leeds",
+    hostAvatar: avatar("yoga,sun", 109),
+    venue: "Hyde Park, Leeds",
+    city: "Leeds",
+    date: inDays2(1, 7, 0),
+    distanceKm: 2.8,
+    free: true,
+    attendees: 48,
+    description: "108 Surya Namaskars at sunrise. Mats provided. Followed by chai and breakfast. \u{1F9D8}",
+    lat: 53.8167,
+    lng: -1.5667,
+    emoji: "\u{1F9D8}",
+    likes: 192,
+    images: [flickr("yoga", 19), flickr("sunrise", 219)],
+    comments: [c("c1", "ananya_l", "4h", "Setting 3 alarms \u{1F605}", 1015)]
+  },
+  {
+    id: "e-edin-shivratri",
+    title: "Maha Shivratri Night Vigil",
+    type: "Festival",
+    host: "Edinburgh Hindu Mandir",
+    hostHandle: "@edin_hindu",
+    hostAvatar: avatar("shiva,lingam", 110),
+    venue: "Edinburgh Hindu Mandir, St Andrew Place",
+    city: "Edinburgh",
+    date: inDays2(11, 18, 0),
+    distanceKm: 305,
+    free: true,
+    attendees: 210,
+    description: "All-night bhajans, four-phase abhishekam to Shivlinga, prasad through the night. \u{1F549}\uFE0F",
+    lat: 55.9533,
+    lng: -3.1883,
+    emoji: "\u{1F549}\uFE0F",
+    likes: 521,
+    images: [flickr("shivlinga", 20), flickr("shiva", 220), flickr("nataraja", 320)],
+    comments: [c("c1", "tanish_e", "3d", "Om Namah Shivaya \u{1F64F}", 1016)]
+  },
+  // --- additional events ---
+  {
+    id: "e-bristol-pooja",
+    title: "Karwa Chauth Pooja & Mehendi",
+    type: "Festival",
+    host: "Bristol Hindu Temple",
+    hostHandle: "@bristol_mandir",
+    hostAvatar: avatar("mehendi,hands", 111),
+    venue: "Bristol Hindu Temple, Fishponds",
+    city: "Bristol",
+    date: inDays2(8, 17, 30),
+    distanceKm: 6.3,
+    free: true,
+    attendees: 78,
+    description: "Mehendi artists, traditional sargi prep tips, group katha and moon-sighting. Open to all.",
+    lat: 51.4831,
+    lng: -2.5238,
+    emoji: "\u{1F319}",
+    likes: 312,
+    images: [flickr("mehendi", 21), flickr("henna", 221), flickr("moon", 321)],
+    comments: [c("c1", "priya.j", "5h", "My first Karwa Chauth in the UK \u2014 so happy this exists \u{1F979}", 1017)]
+  },
+  {
+    id: "e-cambridge-debate",
+    title: "Inter-Uni Vedanta Debate",
+    type: "Study circle",
+    host: "NHSF Cambridge",
+    hostHandle: "@nhsf_cam",
+    hostAvatar: avatar("debate,book", 112),
+    venue: "Pembroke College, Old Library",
+    city: "Cambridge",
+    date: inDays2(9, 18, 0),
+    distanceKm: 80,
+    free: true,
+    attendees: 54,
+    description: "Advaita vs. Dvaita vs. Vishishtadvaita \u2014 three captains, one motion. Tea served.",
+    lat: 52.2017,
+    lng: 0.119,
+    emoji: "\u2696\uFE0F",
+    likes: 98,
+    images: [flickr("library", 22), flickr("debate", 222)],
+    comments: [c("c1", "aryan.c", "1d", "My money's on Vishishtadvaita \u{1F40D}\u{1FAB7}", 1018)]
+  },
+  {
+    id: "e-kcl-diwali-mela",
+    title: "KCL Diwali Mela",
+    type: "Festival",
+    host: "NHSF KCL",
+    hostHandle: "@nhsf_kcl",
+    hostAvatar: avatar("diwali,mela", 113),
+    venue: "KCL Strand Quad",
+    city: "London",
+    date: inDays2(13, 16, 0),
+    distanceKm: 3.1,
+    free: true,
+    attendees: 680,
+    description: "Food stalls, dhol procession, rangoli competition and headline Bollywood DJ set at 8pm.",
+    lat: 51.5118,
+    lng: -0.1162,
+    emoji: "\u{1FA94}",
+    likes: 1456,
+    images: [flickr("mela", 23), flickr("rangoli", 223), flickr("bollywood", 323), flickr("dhol", 423)],
+    comments: [
+      c("c1", "sara_k", "6h", "Rangoli comp prize is \xA3100 voucher \u{1F440}", 1019),
+      c("c2", "jay.m", "8h", "Bringing the whole flat", 1020)
+    ]
+  },
+  {
+    id: "e-not-jagran",
+    title: "Jagran \u2014 All Night Devi Bhajans",
+    type: "Festival",
+    host: "Shree Geeta Bhawan Nottingham",
+    hostHandle: "@geeta_nottm",
+    hostAvatar: avatar("devi,bhajan", 114),
+    venue: "Geeta Bhawan, Carlton Road",
+    city: "Nottingham",
+    date: inDays2(6, 21, 0),
+    distanceKm: 1.5,
+    free: true,
+    attendees: 220,
+    description: "Live bhajan mandali through the night. Chai, prasad and seating throughout.",
+    lat: 52.9586,
+    lng: -1.1668,
+    emoji: "\u{1FA95}",
+    likes: 367,
+    images: [flickr("bhajan", 24), flickr("devi", 224), flickr("temple", 324)],
+    comments: [c("c1", "rishi_n", "2d", "Jai Mata Di \u{1F33A}", 1021)]
+  },
+  {
+    id: "e-glasgow-trek",
+    title: "Sangat Hike \u2014 Loch Lomond",
+    type: "Social",
+    host: "Hindu Mandir Glasgow",
+    hostHandle: "@glasgow_hindu",
+    hostAvatar: avatar("hiking,mountains", 115),
+    venue: "Conic Hill, Loch Lomond",
+    city: "Glasgow",
+    date: inDays2(10, 9, 0),
+    distanceKm: 38,
+    free: false,
+    price: 12,
+    attendees: 42,
+    description: "Easy 4-hour ridge walk + langar at the top. Coach from the Mandir at 8am.",
+    lat: 56.07,
+    lng: -4.58,
+    emoji: "\u26F0\uFE0F",
+    likes: 178,
+    images: [flickr("loch", 25), flickr("hiking", 225), flickr("scotland", 325)],
+    comments: [c("c1", "neha_g", "4h", "Boots out \u{1F97E}", 1022)]
+  },
+  {
+    id: "e-cardiff-cookoff",
+    title: "NHSF Cardiff Cook-off: Best Bhel",
+    type: "Social",
+    host: "NHSF Cardiff",
+    hostHandle: "@nhsf_cardiff",
+    hostAvatar: avatar("chaat,bhel", 116),
+    venue: "SU Kitchens, Cardiff Uni",
+    city: "Cardiff",
+    date: inDays2(12, 18, 0),
+    distanceKm: 2,
+    free: false,
+    price: 3,
+    attendees: 64,
+    description: "6 teams, 30 minutes, one bowl of bhel puri. Tasting and live judging by Aunty panel.",
+    lat: 51.487,
+    lng: -3.181,
+    emoji: "\u{1F958}",
+    likes: 224,
+    images: [flickr("bhelpuri", 26), flickr("streetfood", 226), flickr("chaat", 326)],
+    comments: [c("c1", "tejas_c", "1d", "My nani is in the judging panel, this is rigged \u{1F602}", 1023)]
+  },
+  {
+    id: "e-oxford-ramayana",
+    title: "Ramayana Recital \u2014 Sundarakanda",
+    type: "Mandir Aarti",
+    host: "Oxford Hindu Centre",
+    hostHandle: "@oxford_hindu",
+    hostAvatar: avatar("rama,hanuman", 117),
+    venue: "Oxford Hindu Centre, Cowley Road",
+    city: "Oxford",
+    date: inDays2(15, 18, 30),
+    distanceKm: 55,
+    free: true,
+    attendees: 88,
+    description: "Complete parayanam of the Sundarakanda \u2014 Hanuman's leap, the meeting with Sita, the burning of Lanka.",
+    lat: 51.7437,
+    lng: -1.2167,
+    emoji: "\u{1F412}",
+    likes: 142,
+    images: [flickr("hanuman", 27), flickr("ramayana", 227)],
+    comments: [c("c1", "sita.o", "1d", "Jai Shri Ram \u{1F3F9}", 1024)]
+  }
+];
+var EVENT_TYPES = ["Mandir Aarti", "NHSF", "Festival", "Study circle", "Seva", "Social"];
+
+// src/lib/mcp/tools/list-events.ts
 var list_events_default = defineTool6({
   name: "list_community_events",
   title: "List community events",
@@ -137,7 +1106,462 @@ var list_events_default = defineTool6({
 // src/lib/mcp/tools/list-products.ts
 import { defineTool as defineTool7 } from "npm:@lovable.dev/mcp-js@0.24.0";
 import { z as z4 } from "npm:zod@^4.4.3";
-import { PRODUCTS, CATEGORIES, VENDORS } from "npm:@/data/marketplace";
+
+// src/data/marketplace.ts
+var img = (kw, seed, w = 600, h = 600) => `https://loremflickr.com/${w}/${h}/${encodeURIComponent(kw)}?lock=${seed}`;
+var logo = (kw, seed) => `https://loremflickr.com/200/200/${encodeURIComponent(kw)}?lock=${seed}`;
+var VENDORS = [
+  {
+    id: "v-pooja-london",
+    name: "Pooja Bazaar London",
+    city: "Wembley, London",
+    rating: 4.8,
+    reviews: 412,
+    blurb: "Family-run since 1991. Largest selection of brass murtis in West London.",
+    lat: 51.5582,
+    lng: -0.2964,
+    logo: logo("shop,indian", 201)
+  },
+  {
+    id: "v-shree-bham",
+    name: "Shree Mandir Supplies",
+    city: "Birmingham",
+    rating: 4.7,
+    reviews: 287,
+    blurb: "Wholesale puja items at retail-friendly prices. NHSF partner.",
+    lat: 52.4862,
+    lng: -1.8904,
+    logo: logo("temple,brass", 202)
+  },
+  {
+    id: "v-divine-leics",
+    name: "Divine Touch Leicester",
+    city: "Leicester",
+    rating: 4.9,
+    reviews: 631,
+    blurb: "Curated Belgaum brass and South Indian bronze.",
+    lat: 52.6369,
+    lng: -1.1398,
+    logo: logo("brass,statue", 203)
+  },
+  {
+    id: "v-aroma-mcr",
+    name: "Aroma House Manchester",
+    city: "Manchester",
+    rating: 4.6,
+    reviews: 198,
+    blurb: "Hand-rolled incense, cold-pressed oils, organic dhoop.",
+    lat: 53.4808,
+    lng: -2.2426,
+    logo: logo("incense,sandalwood", 204)
+  },
+  {
+    id: "v-vedic-books",
+    name: "Vedic Books UK",
+    city: "Online \xB7 ships UK-wide",
+    rating: 4.9,
+    reviews: 1124,
+    blurb: "English translations of every major sampradaya.",
+    lat: 51.5074,
+    lng: -0.1278,
+    logo: logo("book,sanskrit", 205)
+  },
+  {
+    id: "v-mithai-soho",
+    name: "Mithai Junction Southall",
+    city: "Southall, London",
+    rating: 4.8,
+    reviews: 892,
+    blurb: "Fresh mithai daily. Diwali hampers ship UK-wide.",
+    lat: 51.5074,
+    lng: -0.3789,
+    logo: logo("sweets,mithai", 206)
+  },
+  {
+    id: "v-saree-bham",
+    name: "Resham Sarees",
+    city: "Soho Road, Birmingham",
+    rating: 4.7,
+    reviews: 524,
+    blurb: "Chaniya cholis, sarees and kurtas for every occasion.",
+    lat: 52.497,
+    lng: -1.912,
+    logo: logo("saree,fabric", 207)
+  }
+];
+var PRODUCTS = [
+  {
+    id: "p-thali-brass",
+    name: "Hand-etched Brass Puja Thali Set",
+    category: "Puja Thalis",
+    vendorId: "v-divine-leics",
+    price: 38,
+    emoji: "\u{1FA94}",
+    rating: 4.9,
+    reviews: 142,
+    image: img("thali", 301),
+    description: "7-piece set: thali, kalash, ghee diya, agarbatti stand, kumkum-haldi katoris and bell. Hand-etched in Belgaum."
+  },
+  {
+    id: "p-thali-silver",
+    name: "Silver-Plated Pooja Thali \u2014 Premium",
+    category: "Puja Thalis",
+    vendorId: "v-pooja-london",
+    price: 72,
+    emoji: "\u{1F948}",
+    rating: 4.8,
+    reviews: 64,
+    image: img("silverthali", 302),
+    description: "Heavy silver-plated thali with engraved Om motif. Includes matching diya and incense stand."
+  },
+  {
+    id: "p-thali-copper",
+    name: "Copper Pancha Patra Set",
+    category: "Puja Thalis",
+    vendorId: "v-shree-bham",
+    price: 24.5,
+    emoji: "\u{1F7E4}",
+    rating: 4.6,
+    reviews: 88,
+    image: img("lota", 303),
+    description: "Traditional copper achamana set \u2014 pancha patra, uddharani and arghya patra. South Indian style."
+  },
+  {
+    id: "p-murti-ganesh",
+    name: "Marble Ganesha Murti \u2014 6 inch",
+    category: "Murtis",
+    vendorId: "v-pooja-london",
+    price: 65,
+    emoji: "\u{1F418}",
+    rating: 4.8,
+    reviews: 89,
+    image: img("ganesha", 304),
+    description: "White Makrana marble Ganesha, suitable for home mandir. Hand-painted gold detailing."
+  },
+  {
+    id: "p-murti-krishna",
+    name: "Brass Bal Krishna with Flute",
+    category: "Murtis",
+    vendorId: "v-divine-leics",
+    price: 42,
+    emoji: "\u{1FA88}",
+    rating: 4.9,
+    reviews: 67,
+    image: img("krishna", 305),
+    description: "Solid brass, 5 inches. Comes with a velvet asana mat."
+  },
+  {
+    id: "p-murti-lakshmi",
+    name: "Lakshmi-Saraswati-Ganesha Trio",
+    category: "Murtis",
+    vendorId: "v-pooja-london",
+    price: 95,
+    emoji: "\u{1FAB7}",
+    rating: 4.9,
+    reviews: 134,
+    image: img("lakshmi", 306),
+    description: "The classic Diwali puja trio in resin with marble finish. 8 inches each."
+  },
+  {
+    id: "p-murti-shiva",
+    name: "Nataraja \u2014 Dancing Shiva Bronze",
+    category: "Murtis",
+    vendorId: "v-divine-leics",
+    price: 145,
+    emoji: "\u{1F57A}",
+    rating: 4.9,
+    reviews: 41,
+    image: img("nataraja", 307),
+    description: "South Indian lost-wax cast bronze Nataraja. 10 inches, ready to display."
+  },
+  {
+    id: "p-murti-hanuman",
+    name: "Sindoor Hanuman Murti",
+    category: "Murtis",
+    vendorId: "v-shree-bham",
+    price: 38,
+    emoji: "\u{1F64F}",
+    rating: 4.7,
+    reviews: 56,
+    image: img("hanuman", 308),
+    description: "Traditional sindoor-coated Hanuman in flying posture. 7 inches."
+  },
+  {
+    id: "p-incense-chandan",
+    name: "Chandan Hand-rolled Agarbatti (pack of 12)",
+    category: "Incense & Oils",
+    vendorId: "v-aroma-mcr",
+    price: 9.5,
+    emoji: "\u{1FAB5}",
+    rating: 4.7,
+    reviews: 320,
+    image: img("agarbatti", 309),
+    description: "Real Mysore sandalwood, no chemicals. 40-minute burn per stick."
+  },
+  {
+    id: "p-incense-loban",
+    name: "Loban Resin Dhoop \u2014 250g",
+    category: "Incense & Oils",
+    vendorId: "v-aroma-mcr",
+    price: 11,
+    emoji: "\u{1F32B}\uFE0F",
+    rating: 4.8,
+    reviews: 142,
+    image: img("frankincense", 310),
+    description: "Pure benzoin resin for aarti and Navagraha puja. Burn on charcoal disk."
+  },
+  {
+    id: "p-oil-til",
+    name: "Cold-pressed Til Oil for Diya \u2014 500ml",
+    category: "Incense & Oils",
+    vendorId: "v-aroma-mcr",
+    price: 12,
+    emoji: "\u{1F6E2}\uFE0F",
+    rating: 4.6,
+    reviews: 88,
+    image: img("sesameoil", 311),
+    description: "Traditional sesame oil for daily diya lighting. Smokeless burn."
+  },
+  {
+    id: "p-ghee-pure",
+    name: "A2 Cow Ghee for Aarti \u2014 1L",
+    category: "Incense & Oils",
+    vendorId: "v-shree-bham",
+    price: 24,
+    emoji: "\u{1F7E1}",
+    rating: 4.9,
+    reviews: 412,
+    image: img("ghee", 312),
+    description: "Bilona-churned Gir cow ghee from a UK organic dairy. For diya, abhishekam and prasad."
+  },
+  {
+    id: "p-diwali-kit",
+    name: "Diwali Home Kit",
+    category: "Festival Items",
+    vendorId: "v-pooja-london",
+    price: 45,
+    emoji: "\u{1F386}",
+    rating: 4.9,
+    reviews: 210,
+    seasonal: "Diwali",
+    image: img("diwali", 313),
+    description: "Lakshmi-Ganesh idols, 24 clay diyas, rangoli powders (5 colours), wicks and toran."
+  },
+  {
+    id: "p-diyas-clay",
+    name: "50 Hand-painted Clay Diyas",
+    category: "Festival Items",
+    vendorId: "v-shree-bham",
+    price: 22,
+    emoji: "\u{1FA94}",
+    rating: 4.8,
+    reviews: 380,
+    seasonal: "Diwali",
+    image: img("diya", 314),
+    description: "Hand-painted terracotta diyas in mixed designs. Free wicks included."
+  },
+  {
+    id: "p-rangoli-kit",
+    name: "Rangoli Stencil & Powder Kit",
+    category: "Festival Items",
+    vendorId: "v-pooja-london",
+    price: 15,
+    emoji: "\u{1F338}",
+    rating: 4.7,
+    reviews: 198,
+    seasonal: "Diwali",
+    image: img("rangoli", 315),
+    description: "8 reusable stencils with 6 colours of rangoli powder. Beginner-friendly."
+  },
+  {
+    id: "p-holi-colours",
+    name: "Organic Gulal \u2014 8 colours",
+    category: "Festival Items",
+    vendorId: "v-shree-bham",
+    price: 18,
+    emoji: "\u{1F308}",
+    rating: 4.7,
+    reviews: 156,
+    seasonal: "Holi",
+    image: img("gulal", 316),
+    description: "Cornflour-based, skin-safe, washes out of clothes. 100g of each colour."
+  },
+  {
+    id: "p-rakhi-set",
+    name: "Brother-Sister Rakhi Set",
+    category: "Festival Items",
+    vendorId: "v-pooja-london",
+    price: 14,
+    emoji: "\u{1F397}\uFE0F",
+    rating: 4.8,
+    reviews: 76,
+    seasonal: "Raksha Bandhan",
+    image: img("rakhi", 317),
+    description: "Pair of designer rakhis with roli, chawal and mishri. Ships in a gift box."
+  },
+  {
+    id: "p-navratri-chania",
+    name: "Navratri Chaniya Choli",
+    category: "Apparel",
+    vendorId: "v-saree-bham",
+    price: 89,
+    emoji: "\u{1F457}",
+    rating: 4.8,
+    reviews: 64,
+    seasonal: "Navratri",
+    image: img("chaniyacholi", 318),
+    description: "Hand-mirrored Gujarati chaniya choli. Three-piece set, available sizes XS\u2013XL."
+  },
+  {
+    id: "p-kurta-men",
+    name: "Mens Silk Kurta Pyjama",
+    category: "Apparel",
+    vendorId: "v-saree-bham",
+    price: 65,
+    emoji: "\u{1F454}",
+    rating: 4.7,
+    reviews: 142,
+    image: img("kurta", 319),
+    description: "Cream raw-silk kurta with churidar. Sizes S\u2013XXL. Festival-ready."
+  },
+  {
+    id: "p-saree-banarasi",
+    name: "Banarasi Silk Saree",
+    category: "Apparel",
+    vendorId: "v-saree-bham",
+    price: 240,
+    emoji: "\u{1F97B}",
+    rating: 4.9,
+    reviews: 88,
+    image: img("banarasi", 320),
+    description: "Pure Banarasi silk with gold zari work. Includes matching blouse piece."
+  },
+  {
+    id: "p-gita-as-it-is",
+    name: "Bhagavad Gita As It Is (English)",
+    category: "Books",
+    vendorId: "v-vedic-books",
+    price: 19.99,
+    emoji: "\u{1F4D6}",
+    rating: 4.9,
+    reviews: 982,
+    image: img("bhagavadgita", 321),
+    description: "Word-for-word Sanskrit, translation and Srila Prabhupada's commentary. 900 pages, hardback."
+  },
+  {
+    id: "p-upanishads",
+    name: "The Principal Upanishads \u2014 Easwaran",
+    category: "Books",
+    vendorId: "v-vedic-books",
+    price: 14.5,
+    emoji: "\u{1F4DA}",
+    rating: 4.8,
+    reviews: 412,
+    image: img("upanishads", 322),
+    description: "Eknath Easwaran's clear, contemplative translation. Penguin Classics edition."
+  },
+  {
+    id: "p-ramayan",
+    name: "Valmiki Ramayana \u2014 illustrated",
+    category: "Books",
+    vendorId: "v-vedic-books",
+    price: 28,
+    emoji: "\u{1F3F9}",
+    rating: 4.9,
+    reviews: 256,
+    image: img("ramayana", 323),
+    description: "Two-volume hardback with illustrations by Indian classical artists."
+  },
+  {
+    id: "p-rudraksha",
+    name: "Rudraksha Mala \u2014 108 beads",
+    category: "Jewellery",
+    vendorId: "v-divine-leics",
+    price: 28,
+    emoji: "\u{1F4FF}",
+    rating: 4.7,
+    reviews: 178,
+    image: img("rudraksha", 324),
+    description: "Genuine 5-mukhi Nepali rudraksha, knotted on cotton thread for japa."
+  },
+  {
+    id: "p-tulsi-mala",
+    name: "Tulsi Wood Japa Mala",
+    category: "Jewellery",
+    vendorId: "v-divine-leics",
+    price: 16,
+    emoji: "\u{1F33F}",
+    rating: 4.8,
+    reviews: 234,
+    image: img("tulsimala", 325),
+    description: "Sacred Tulsi wood, traditionally used by Vaishnav devotees."
+  },
+  {
+    id: "p-gold-om",
+    name: "Gold-plated Om Pendant",
+    category: "Jewellery",
+    vendorId: "v-divine-leics",
+    price: 32,
+    emoji: "\u{1F549}\uFE0F",
+    rating: 4.7,
+    reviews: 96,
+    image: img("ompendant", 326),
+    description: '22k gold-plated sterling silver with 18" chain. Hallmarked.'
+  },
+  {
+    id: "p-janmashtami",
+    name: "Janmashtami Jhula Set",
+    category: "Festival Items",
+    vendorId: "v-pooja-london",
+    price: 32,
+    emoji: "\u{1F319}",
+    rating: 4.8,
+    reviews: 41,
+    seasonal: "Janmashtami",
+    image: img("jhula", 327),
+    description: "Decorated cradle for Bal Krishna with cushion, peacock-feather garland and bells."
+  },
+  {
+    id: "p-mithai-box",
+    name: "Diwali Mithai Hamper (24pc)",
+    category: "Sweets & Prasad",
+    vendorId: "v-mithai-soho",
+    price: 35,
+    emoji: "\u{1F36C}",
+    rating: 4.9,
+    reviews: 612,
+    seasonal: "Diwali",
+    image: img("mithai", 328),
+    description: "Kaju katli, motichoor laddoo, gulab jamun, rasmalai \u2014 packed fresh, ships overnight."
+  },
+  {
+    id: "p-ladoo-tin",
+    name: "Motichoor Laddoo Tin (500g)",
+    category: "Sweets & Prasad",
+    vendorId: "v-mithai-soho",
+    price: 14,
+    emoji: "\u{1F7E0}",
+    rating: 4.8,
+    reviews: 489,
+    image: img("laddoo", 329),
+    description: "Hand-rolled motichoor laddoos. Perfect for puja prasad."
+  },
+  {
+    id: "p-prasad-box",
+    name: "Mandir Prasad Box",
+    category: "Sweets & Prasad",
+    vendorId: "v-mithai-soho",
+    price: 9.5,
+    emoji: "\u{1F36F}",
+    rating: 4.7,
+    reviews: 218,
+    image: img("prasad", 330),
+    description: "Small box with peda, dry fruit and elaichi mishri for daily aarti offerings."
+  }
+];
+var CATEGORIES = ["Puja Thalis", "Murtis", "Incense & Oils", "Festival Items", "Books", "Apparel", "Sweets & Prasad", "Jewellery"];
+
+// src/lib/mcp/tools/list-products.ts
 var list_products_default = defineTool7({
   name: "list_products",
   title: "List marketplace products",
@@ -162,7 +1586,176 @@ var list_products_default = defineTool7({
 // src/lib/mcp/tools/list-audio.ts
 import { defineTool as defineTool8 } from "npm:@lovable.dev/mcp-js@0.24.0";
 import { z as z5 } from "npm:zod@^4.4.3";
-import { TRACKS, AUDIO_CATEGORIES } from "npm:@/data/audio";
+
+// src/data/audio.ts
+var cover = (kw, seed) => `https://loremflickr.com/600/600/${kw}?lock=${seed}`;
+var ARCHIVE = "https://archive.org/download";
+var TRACKS = [
+  {
+    id: "t-shiv-chalisa",
+    title: "Shiv Chalisa (Maha Super Fast)",
+    artist: "Hariharan",
+    category: "Bhajans",
+    durationSec: 195,
+    hue: 215,
+    cover: cover("shiva,lingam,trident", 408),
+    description: "A vigorous Hindi devotional set to live mridanga and harmonium.",
+    audioUrl: `${ARCHIVE}/hanuman-chalisa-hariharan-gulshan-kumar_202605/Chalisa_Shiv%20Chalisa%20Maha%20Super%20Fast.mp3`
+  },
+  {
+    id: "t-ganesh-chalisa",
+    title: "Ganesh Chalisa",
+    artist: "Hariharan",
+    category: "Bhajans",
+    durationSec: 190,
+    hue: 18,
+    cover: cover("ganesha,statue,marigold", 409),
+    description: "The 40-verse hymn to the remover of obstacles. Begin every undertaking here.",
+    audioUrl: `${ARCHIVE}/hanuman-chalisa-hariharan-gulshan-kumar_202605/Chalisa_Ganesh%20Chalisa%20Maha%20Super%20Fast.mp3`
+  },
+  {
+    id: "t-hanuman-ashtak",
+    title: "Sankat Mochan Hanuman Ashtak",
+    artist: "Hariharan",
+    category: "Bhajans",
+    durationSec: 374,
+    hue: 12,
+    cover: cover("hanuman,sindoor,statue", 403),
+    description: "Tulsidas's eight verses recited when troubles loom \u2014 Hanuman, the breaker of distress.",
+    audioUrl: `${ARCHIVE}/hanuman-chalisa-hariharan-gulshan-kumar_202605/Chalisa_Sankat%20Mochan%20Hanuman%20Ashtak.mp3`
+  },
+  {
+    id: "t-shiv-epic",
+    title: "Epic Shiv Chalisa",
+    artist: "Hariharan",
+    category: "Morning Slokas",
+    durationSec: 414,
+    hue: 270,
+    cover: cover("shiva,mountain,kailash", 406),
+    description: "The classical, slow-tempo rendition. 40 verses to Mahadev.",
+    audioUrl: `${ARCHIVE}/hanuman-chalisa-hariharan-gulshan-kumar_202605/Chalisa_Epic%20Shiv%20Chalisa.mp3`
+  },
+  {
+    id: "t-shiv-tandava",
+    title: "Shiv Tandav Stotram",
+    artist: "Traditional Pandits",
+    category: "Morning Slokas",
+    durationSec: 471,
+    hue: 215,
+    cover: cover("shiva,nataraja,dance", 408),
+    description: "Ravana's thundering hymn to Lord Shiva \u2014 sixteen verses of cosmic dance.",
+    audioUrl: `${ARCHIVE}/ShivTandavStotram/02ShivTandavStotram.mp3`
+  },
+  {
+    id: "t-mahamrityunjaya",
+    title: "Maha Mrityunjaya Mantra",
+    artist: "Vedic Recitation",
+    category: "Meditation Mantras",
+    durationSec: 1347,
+    hue: 270,
+    cover: cover("shiva,lingam,abhishekam", 406),
+    description: "For healing and protection. Continuous recitation for deep meditation.",
+    audioUrl: `${ARCHIVE}/ShivMahaMrityunjayaMantra2/Shiv%20MahaMrityunjaya%20Mantra%20-2.mp3`
+  },
+  {
+    id: "t-mahamrityunjaya-short",
+    title: "Maha Mrityunjaya \u2014 108 times (short)",
+    artist: "Vedic Recitation",
+    category: "Meditation Mantras",
+    durationSec: 139,
+    hue: 200,
+    cover: cover("sunrise,meditation,om", 405),
+    description: "A shorter 108-count rendition \u2014 perfect for morning sadhana.",
+    audioUrl: `${ARCHIVE}/ShivMahaMrityunjayaMantra2/Shiv%20Mahamrityunjaya%20Mantra-1.mp3`
+  },
+  {
+    id: "t-om-namah",
+    title: "Om Namah Shivaya \u2014 Continuous",
+    artist: "Anandmurti Gurumaa",
+    category: "Meditation Mantras",
+    durationSec: 1336,
+    hue: 195,
+    cover: cover("om,meditation,yoga", 410),
+    description: "22 minutes of continuous Om Namah Shivaya \u2014 for japa and dhyana.",
+    audioUrl: `${ARCHIVE}/OmNamahShivaya/OmNamahShivaya.mp3`
+  },
+  {
+    id: "t-lakshmi-aarti",
+    title: "Om Jai Lakshmi Mata",
+    artist: "Anuradha Paudwal",
+    category: "Aarti",
+    durationSec: 347,
+    hue: 50,
+    cover: cover("lakshmi,gold,lotus", 411),
+    description: "The Diwali evening aarti to Goddess Lakshmi.",
+    audioUrl: `${ARCHIVE}/om-jay-lakshmi-mata-aarti-laxmi-maa.mp3/om-jay-lakshmi-mata-aarti-laxmi-maa.mp3.mp3`
+  },
+  {
+    id: "t-vishnu",
+    title: "Vishnu Sahasranamam",
+    artist: "M.S. Subbulakshmi (Classic)",
+    category: "Morning Slokas",
+    durationSec: 1926,
+    hue: 28,
+    cover: cover("vishnu,hindu,temple", 401),
+    description: "The 1000 names of Vishnu. The definitive recording.",
+    audioUrl: `${ARCHIVE}/ythub.-cc-vishnu-sahasranamam-full-version-original-320k_202109/%5BYTHUB.CC%5D%20Vishnu%20Sahasranamam%20Full%20Version%20Original-320k.mp3`
+  },
+  // Mock-only tracks (no audio URL — player still simulates progress)
+  {
+    id: "t-suprabhatam",
+    title: "Venkateswara Suprabhatam",
+    artist: "M.S. Subbulakshmi",
+    category: "Morning Slokas",
+    durationSec: 28 * 60 + 40,
+    hue: 38,
+    cover: cover("tirupati,temple,sunrise", 402),
+    description: "The traditional dawn awakening of Lord Venkateswara at Tirumala."
+  },
+  {
+    id: "t-omjaya",
+    title: "Om Jai Jagdish Hare",
+    artist: "Anuradha Paudwal",
+    category: "Aarti",
+    durationSec: 6 * 60 + 32,
+    hue: 45,
+    cover: cover("aarti,diya,thali", 404),
+    description: "The universal evening aarti, sung in homes across the diaspora."
+  },
+  {
+    id: "t-radhekrishna",
+    title: "Radhe Radhe Govinda",
+    artist: "Krishna Das",
+    category: "Bhajans",
+    durationSec: 14 * 60 + 8,
+    hue: 320,
+    cover: cover("krishna,flute,peacock", 407),
+    description: "Call-and-response kirtan, harmonium and tabla."
+  },
+  {
+    id: "t-aarti-ganesh",
+    title: "Sukhakarta Dukhaharta",
+    artist: "Lata Mangeshkar",
+    category: "Aarti",
+    durationSec: 4 * 60 + 12,
+    hue: 18,
+    cover: cover("ganesha,marigold,puja", 412),
+    description: "The beloved Marathi aarti to Lord Ganesha."
+  },
+  {
+    id: "t-durga-saptashati",
+    title: "Durga Saptashati \u2014 Chapter 1",
+    artist: "Anuradha Paudwal",
+    category: "Morning Slokas",
+    durationSec: 21 * 60 + 5,
+    hue: 0,
+    cover: cover("durga,goddess,navratri", 413),
+    description: "Navratri recitation of the 700 verses praising Devi."
+  }
+];
+var AUDIO_CATEGORIES = ["Morning Slokas", "Bhajans", "Meditation Mantras", "Aarti"];
+
+// src/lib/mcp/tools/list-audio.ts
 var list_audio_default = defineTool8({
   name: "list_audio_tracks",
   title: "List audio tracks",

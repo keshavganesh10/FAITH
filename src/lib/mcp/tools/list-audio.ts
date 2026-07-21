@@ -1,6 +1,6 @@
 import { defineTool } from "@lovable.dev/mcp-js";
 import { z } from "zod";
-import { TRACKS, AUDIO_CATEGORIES, type AudioCategory } from "@/data/audio";
+import { TRACKS, AUDIO_CATEGORIES, type AudioCategory } from "../../../data/audio";
 
 export default defineTool({
   name: "list_audio_tracks",

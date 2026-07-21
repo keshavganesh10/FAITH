@@ -1,5 +1,5 @@
 import { defineTool } from "@lovable.dev/mcp-js";
-import { VERSE_OF_DAY } from "@/data/scriptures";
+import { VERSE_OF_DAY } from "../../../data/scriptures";
 
 export default defineTool({
   name: "get_verse_of_the_day",

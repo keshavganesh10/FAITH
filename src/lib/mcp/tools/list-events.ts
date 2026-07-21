@@ -1,6 +1,6 @@
 import { defineTool } from "@lovable.dev/mcp-js";
 import { z } from "zod";
-import { EVENTS, EVENT_TYPES, type EventType } from "@/data/community";
+import { EVENTS, EVENT_TYPES, type EventType } from "../../../data/community";
 
 export default defineTool({
   name: "list_community_events",

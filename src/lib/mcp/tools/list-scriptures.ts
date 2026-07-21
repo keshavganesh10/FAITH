@@ -1,5 +1,5 @@
 import { defineTool } from "@lovable.dev/mcp-js";
-import { SCRIPTURES } from "@/data/scriptures";
+import { SCRIPTURES } from "../../../data/scriptures";
 
 export default defineTool({
   name: "list_scriptures",

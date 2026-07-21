@@ -1,5 +1,5 @@
 import { defineTool } from "@lovable.dev/mcp-js";
-import { OBSERVANCES, PANCHANG } from "@/data/practice";
+import { OBSERVANCES, PANCHANG } from "../../../data/practice";
 
 export default defineTool({
   name: "list_upcoming_observances",

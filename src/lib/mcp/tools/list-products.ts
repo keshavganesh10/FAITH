@@ -1,6 +1,6 @@
 import { defineTool } from "@lovable.dev/mcp-js";
 import { z } from "zod";
-import { PRODUCTS, CATEGORIES, VENDORS, type Category } from "@/data/marketplace";
+import { PRODUCTS, CATEGORIES, VENDORS, type Category } from "../../../data/marketplace";
 
 export default defineTool({
   name: "list_products",
